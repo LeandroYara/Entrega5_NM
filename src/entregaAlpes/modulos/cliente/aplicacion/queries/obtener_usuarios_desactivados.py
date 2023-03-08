@@ -1,4 +1,4 @@
-from aeroalpes.seedwork.aplicacion.queries import Query, QueryHandler, ResultadoQuery
+from entregaAlpes.seedwork.aplicacion.queries import Query, QueryHandler, ResultadoQuery
 import uuid
 
 class ObtenerUsuariosDesactivados(Query):

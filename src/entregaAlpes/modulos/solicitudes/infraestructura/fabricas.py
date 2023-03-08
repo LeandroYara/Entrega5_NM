@@ -6,13 +6,13 @@ objetos complejos en la capa de infraestructura del dominio de vuelos
 """
 
 from dataclasses import dataclass, field
-from entregaalpes.seedwork.dominio.fabricas import Fabrica
-from entregaalpes.seedwork.dominio.repositorios import Repositorio
-from entregaalpes.seedwork.infraestructura.vistas import Vista
-from entregaalpes.modulos.solicitudes.infraestructura.vistas import VistaReserva
-from entregaalpes.modulos.solicitudes.dominio.entidades import Solicitud
-from entregaalpes.modulos.solicitudes.dominio.repositorios import RepositorioSolicitudes, RepositorioEventosSolicitudes
-from .repositorios import RepositorioSolicitudesSQLAlchemy, RepositorioEventosReservaSQLAlchemy
+from entregaAlpes.seedwork.dominio.fabricas import Fabrica
+from entregaAlpes.seedwork.dominio.repositorios import Repositorio
+from entregaAlpes.seedwork.infraestructura.vistas import Vista
+from entregaAlpes.modulos.solicitudes.infraestructura.vistas import VistaSolicitud
+from entregaAlpes.modulos.solicitudes.dominio.entidades import Solicitud
+from entregaAlpes.modulos.solicitudes.dominio.repositorios import RepositorioSolicitudes, RepositorioEventosSolicitudes
+from .repositorios import RepositorioSolicitudesSQLAlchemy, RepositorioEventosSolicitudSQLAlchemy
 from .excepciones import ExcepcionFabrica
 
 @dataclass
@@ -21,7 +21,7 @@ class FabricaRepositorio(Fabrica):
         if obj == RepositorioSolicitudes:
             return RepositorioSolicitudesSQLAlchemy()
         elif obj == RepositorioEventosSolicitudes:
-            return RepositorioEventosReservaSQLAlchemy()
+            return RepositorioEventosSolicitudSQLAlchemy()
         else:
             raise ExcepcionFabrica(f'No existe fábrica para el objeto {obj}')
 
@@ -29,6 +29,6 @@ class FabricaRepositorio(Fabrica):
 class FabricaVista(Fabrica):
     def crear_objeto(self, obj: type, mapeador: any = None) -> Vista:
         if obj == Solicitud:
-            return VistaReserva()
+            return VistaSolicitud()
         else:
             raise ExcepcionFabrica(f'No existe fábrica para el objeto {obj}')

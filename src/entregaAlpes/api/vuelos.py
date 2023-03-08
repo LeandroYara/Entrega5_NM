@@ -1,16 +1,16 @@
-import aeroalpes.seedwork.presentacion.api as api
+import entregaAlpes.seedwork.presentacion.api as api
 import json
-from aeroalpes.modulos.vuelos.aplicacion.servicios import ServicioReserva
-from aeroalpes.modulos.vuelos.aplicacion.dto import ReservaDTO
-from aeroalpes.seedwork.dominio.excepciones import ExcepcionDominio
+from entregaAlpes.modulos.vuelos.aplicacion.servicios import ServicioReserva
+from entregaAlpes.modulos.vuelos.aplicacion.dto import ReservaDTO
+from entregaAlpes.seedwork.dominio.excepciones import ExcepcionDominio
 
 from flask import redirect, render_template, request, session, url_for
 from flask import Response
-from aeroalpes.modulos.vuelos.aplicacion.mapeadores import MapeadorReservaDTOJson
-from aeroalpes.modulos.vuelos.aplicacion.comandos.crear_reserva import CrearReserva
-from aeroalpes.modulos.vuelos.aplicacion.queries.obtener_reserva import ObtenerReserva
-from aeroalpes.seedwork.aplicacion.comandos import ejecutar_commando
-from aeroalpes.seedwork.aplicacion.queries import ejecutar_query
+from entregaAlpes.modulos.vuelos.aplicacion.mapeadores import MapeadorReservaDTOJson
+from entregaAlpes.modulos.vuelos.aplicacion.comandos.crear_reserva import CrearReserva
+from entregaAlpes.modulos.vuelos.aplicacion.queries.obtener_reserva import ObtenerReserva
+from entregaAlpes.seedwork.aplicacion.comandos import ejecutar_commando
+from entregaAlpes.seedwork.aplicacion.queries import ejecutar_query
 
 bp = api.crear_blueprint('vuelos', '/vuelos')
 

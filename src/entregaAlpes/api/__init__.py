@@ -7,16 +7,16 @@ from flask_swagger import swagger
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 def registrar_handlers():
-    import aeroalpes.modulos.cliente.aplicacion
-    import aeroalpes.modulos.vuelos.aplicacion
+    import entregaAlpes.modulos.cliente.aplicacion
+    import entregaAlpes.modulos.vuelos.aplicacion
 
 def importar_modelos_alchemy():
-    import aeroalpes.modulos.cliente.infraestructura.dto
-    import aeroalpes.modulos.hoteles.infraestructura.dto
-    import aeroalpes.modulos.pagos.infraestructura.dto
-    import aeroalpes.modulos.precios_dinamicos.infraestructura.dto
-    import aeroalpes.modulos.vehiculos.infraestructura.dto
-    import aeroalpes.modulos.vuelos.infraestructura.dto
+    import entregaAlpes.modulos.cliente.infraestructura.dto
+    import entregaAlpes.modulos.hoteles.infraestructura.dto
+    import entregaAlpes.modulos.pagos.infraestructura.dto
+    import entregaAlpes.modulos.precios_dinamicos.infraestructura.dto
+    import entregaAlpes.modulos.vehiculos.infraestructura.dto
+    import entregaAlpes.modulos.vuelos.infraestructura.dto
 
 def comenzar_consumidor():
     """
@@ -26,12 +26,12 @@ def comenzar_consumidor():
     """
 
     import threading
-    import aeroalpes.modulos.cliente.infraestructura.consumidores as cliente
-    import aeroalpes.modulos.hoteles.infraestructura.consumidores as hoteles
-    import aeroalpes.modulos.pagos.infraestructura.consumidores as pagos
-    import aeroalpes.modulos.precios_dinamicos.infraestructura.consumidores as precios_dinamicos
-    import aeroalpes.modulos.vehiculos.infraestructura.consumidores as vehiculos
-    import aeroalpes.modulos.vuelos.infraestructura.consumidores as vuelos
+    import entregaAlpes.modulos.cliente.infraestructura.consumidores as cliente
+    import entregaAlpes.modulos.hoteles.infraestructura.consumidores as hoteles
+    import entregaAlpes.modulos.pagos.infraestructura.consumidores as pagos
+    import entregaAlpes.modulos.precios_dinamicos.infraestructura.consumidores as precios_dinamicos
+    import entregaAlpes.modulos.vehiculos.infraestructura.consumidores as vehiculos
+    import entregaAlpes.modulos.vuelos.infraestructura.consumidores as vuelos
 
     # Suscripción a eventos
     threading.Thread(target=cliente.suscribirse_a_eventos).start()
@@ -62,10 +62,10 @@ def create_app(configuracion={}):
     app.config['TESTING'] = configuracion.get('TESTING')
 
      # Inicializa la DB
-    from aeroalpes.config.db import init_db
+    from entregaAlpes.config.db import init_db
     init_db(app)
 
-    from aeroalpes.config.db import db
+    from entregaAlpes.config.db import db
 
     importar_modelos_alchemy()
     registrar_handlers()

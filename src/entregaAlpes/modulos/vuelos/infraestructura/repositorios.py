@@ -5,11 +5,11 @@ persistir objetos dominio (agregaciones) en la capa de infraestructura del domin
 
 """
 
-from aeroalpes.config.db import db
-from aeroalpes.modulos.vuelos.dominio.repositorios import RepositorioReservas, RepositorioProveedores
-from aeroalpes.modulos.vuelos.dominio.objetos_valor import NombreAero, Odo, Leg, Segmento, Itinerario, CodigoIATA
-from aeroalpes.modulos.vuelos.dominio.entidades import Proveedor, Aeropuerto, Reserva
-from aeroalpes.modulos.vuelos.dominio.fabricas import FabricaVuelos
+from entregaAlpes.config.db import db
+from entregaAlpes.modulos.vuelos.dominio.repositorios import RepositorioReservas, RepositorioProveedores
+from entregaAlpes.modulos.vuelos.dominio.objetos_valor import NombreAero, Odo, Leg, Segmento, Itinerario, CodigoIATA
+from entregaAlpes.modulos.vuelos.dominio.entidades import Proveedor, Aeropuerto, Reserva
+from entregaAlpes.modulos.vuelos.dominio.fabricas import FabricaVuelos
 from .dto import Reserva as ReservaDTO
 from .mapeadores import MapeadorReserva
 from uuid import UUID

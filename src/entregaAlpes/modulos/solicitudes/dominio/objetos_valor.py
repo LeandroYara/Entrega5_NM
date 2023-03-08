@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from entregaalpes.modulos.solicitudes.dominio.entidades import Cliente
-from entregaalpes.seedwork.dominio.objetos_valor import ObjetoValor, Codigo, Ruta, Locacion
+from entregaAlpes.modulos.solicitudes.dominio.entidades import Cliente
+from entregaAlpes.seedwork.dominio.objetos_valor import ObjetoValor, Codigo, Ruta, Locacion
 from datetime import datetime
 from enum import Enum
 

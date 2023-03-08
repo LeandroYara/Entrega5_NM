@@ -1,4 +1,4 @@
-from entregaalpes.seedwork.aplicacion.comandos import Comando, ComandoHandler
+from entregaAlpes.seedwork.aplicacion.comandos import Comando, ComandoHandler
 
 class AprobarSolicitud(Comando):
     ...

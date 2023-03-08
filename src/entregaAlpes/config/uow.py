@@ -1,5 +1,5 @@
-from aeroalpes.config.db import db
-from aeroalpes.seedwork.infraestructura.uow import UnidadTrabajo, Batch
+from entregaAlpes.config.db import db
+from entregaAlpes.seedwork.infraestructura.uow import UnidadTrabajo, Batch
 
 class UnidadTrabajoSQLAlchemy(UnidadTrabajo):
 

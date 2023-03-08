@@ -1,5 +1,5 @@
 from pulsar.schema import *
-from aeroalpes.seedwork.infraestructura.schema.v1.eventos import EventoIntegracion
+from entregaAlpes.seedwork.infraestructura.schema.v1.eventos import EventoIntegracion
 
 class ReservaCreadaPayload(Record):
     id_reserva = String()

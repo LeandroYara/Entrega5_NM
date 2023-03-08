@@ -1,7 +1,7 @@
 
 
-from aeroalpes.modulos.vuelos.dominio.eventos import ReservaCreada
-from aeroalpes.seedwork.aplicacion.handlers import Handler
+from entregaAlpes.modulos.vuelos.dominio.eventos import ReservaCreada
+from entregaAlpes.seedwork.aplicacion.handlers import Handler
 
 class HandlerReservaDominio(Handler):
 

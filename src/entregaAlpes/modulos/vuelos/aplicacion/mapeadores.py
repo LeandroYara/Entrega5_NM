@@ -1,7 +1,7 @@
-from aeroalpes.seedwork.aplicacion.dto import Mapeador as AppMap
-from aeroalpes.seedwork.dominio.repositorios import Mapeador as RepMap
-from aeroalpes.modulos.vuelos.dominio.entidades import Reserva, Aeropuerto
-from aeroalpes.modulos.vuelos.dominio.objetos_valor import Itinerario, Odo, Segmento, Leg
+from entregaAlpes.seedwork.aplicacion.dto import Mapeador as AppMap
+from entregaAlpes.seedwork.dominio.repositorios import Mapeador as RepMap
+from entregaAlpes.modulos.vuelos.dominio.entidades import Reserva, Aeropuerto
+from entregaAlpes.modulos.vuelos.dominio.objetos_valor import Itinerario, Odo, Segmento, Leg
 from .dto import ReservaDTO, ItinerarioDTO, OdoDTO, SegmentoDTO, LegDTO
 
 from datetime import datetime

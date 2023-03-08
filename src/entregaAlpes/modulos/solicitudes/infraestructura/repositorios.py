@@ -5,11 +5,11 @@ persistir objetos dominio (agregaciones) en la capa de infraestructura del domin
 
 """
 
-from entregaalpes.config.db import db
-from entregaalpes.modulos.solicitudes.dominio.fabricas import FabricaEnvios
-from entregaalpes.modulos.solicitudes.dominio.repositorios import RepositorioSolicitudes, RepositorioEventosSolicitudes
-from entregaalpes.modulos.solicitudes.dominio.objetos_valor import NombreAero, Leg, Segmento
-from entregaalpes.modulos.solicitudes.dominio.entidades import Solicitud
+from entregaAlpes.config.db import db
+from entregaAlpes.modulos.solicitudes.dominio.fabricas import FabricaEnvios
+from entregaAlpes.modulos.solicitudes.dominio.repositorios import RepositorioSolicitudes, RepositorioEventosSolicitudes
+from entregaAlpes.modulos.solicitudes.dominio.objetos_valor import Leg, Segmento
+from entregaAlpes.modulos.solicitudes.dominio.entidades import Solicitud
 from .dto import Solicitud as SolicitudDTO
 from .dto import EventosSolicitud
 from .mapeadores import MapeadorSolicitud, MapadeadorEventosSolicitud
@@ -23,19 +23,19 @@ class RepositorioSolicitudesSQLAlchemy(RepositorioSolicitudes):
         self._fabrica_envios: FabricaEnvios = FabricaEnvios()
 
     @property
-    def fabrica_vuelos(self):
-        return self._fabrica_vuelos
+    def fabrica_envios(self):
+        return self._fabrica_envios
 
     def obtener_por_id(self, id: UUID) -> Solicitud:
         reserva_dto = db.session.query(SolicitudDTO).filter_by(id=str(id)).one()
-        return self.fabrica_vuelos.crear_objeto(reserva_dto, MapeadorSolicitud())
+        return self.fabrica_envios.crear_objeto(reserva_dto, MapeadorSolicitud())
 
     def obtener_todos(self) -> list[Solicitud]:
         # TODO
         raise NotImplementedError
 
     def agregar(self, solicitud: Solicitud):
-        reserva_dto = self.fabrica_vuelos.crear_objeto(solicitud, MapeadorSolicitud())
+        reserva_dto = self._fabrica_envios.crear_objeto(solicitud, MapeadorSolicitud())
 
         db.session.add(reserva_dto)
 
@@ -64,7 +64,7 @@ class RepositorioEventosSolicitudSQLAlchemy(RepositorioEventosSolicitudes):
         raise NotImplementedError
 
     def agregar(self, evento):
-        solicitud_evento = self.fabrica_vuelos.crear_objeto(evento, MapadeadorEventosSolicitud())
+        solicitud_evento = self.fabrica_envios.crear_objeto(evento, MapadeadorEventosSolicitud())
 
         parser_payload = JsonSchema(solicitud_evento.data.__class__)
         json_str = parser_payload.encode(solicitud_evento.data)

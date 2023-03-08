@@ -1,4 +1,4 @@
-from entregaalpes.seedwork.dominio.excepciones import ExcepcionFabrica
+from entregaAlpes.seedwork.dominio.excepciones import ExcepcionFabrica
 
 class TipoObjetoNoExisteEnDominioEnviosExcepcion(ExcepcionFabrica):
     def __init__(self, mensaje='No existe una fábrica para el tipo solicitado en el módulo de envios'):

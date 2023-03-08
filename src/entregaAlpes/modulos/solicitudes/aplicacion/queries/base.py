@@ -1,6 +1,6 @@
-from entregaalpes.seedwork.aplicacion.queries import QueryHandler
-from entregaalpes.modulos.solicitudes.infraestructura.fabricas import FabricaVista
-from entregaalpes.modulos.solicitudes.dominio.fabricas import FabricaEnvios
+from entregaAlpes.seedwork.aplicacion.queries import QueryHandler
+from entregaAlpes.modulos.solicitudes.infraestructura.fabricas import FabricaVista
+from entregaAlpes.modulos.solicitudes.dominio.fabricas import FabricaEnvios
 
 class SolicitudQueryBaseHandler(QueryHandler):
     def __init__(self):

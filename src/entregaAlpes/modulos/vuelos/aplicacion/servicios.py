@@ -1,9 +1,9 @@
-from aeroalpes.seedwork.aplicacion.servicios import Servicio
-from aeroalpes.modulos.vuelos.dominio.entidades import Reserva
-from aeroalpes.modulos.vuelos.dominio.fabricas import FabricaVuelos
-from aeroalpes.modulos.vuelos.infraestructura.fabricas import FabricaRepositorio
-from aeroalpes.modulos.vuelos.infraestructura.repositorios import RepositorioReservas
-from aeroalpes.seedwork.infraestructura.uow import UnidadTrabajoPuerto
+from entregaAlpes.seedwork.aplicacion.servicios import Servicio
+from entregaAlpes.modulos.vuelos.dominio.entidades import Reserva
+from entregaAlpes.modulos.vuelos.dominio.fabricas import FabricaVuelos
+from entregaAlpes.modulos.vuelos.infraestructura.fabricas import FabricaRepositorio
+from entregaAlpes.modulos.vuelos.infraestructura.repositorios import RepositorioReservas
+from entregaAlpes.seedwork.infraestructura.uow import UnidadTrabajoPuerto
 from .mapeadores import MapeadorReserva
 
 from .dto import ReservaDTO

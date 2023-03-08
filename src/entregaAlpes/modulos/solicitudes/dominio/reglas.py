@@ -4,7 +4,7 @@ En este archivo usted encontrará reglas de negocio del dominio de cliente
 
 """
 
-from entregaalpes.seedwork.dominio.reglas import ReglaNegocio
+from entregaAlpes.seedwork.dominio.reglas import ReglaNegocio
 from .objetos_valor import Ruta
 from .entidades import Cliente
 from .objetos_valor import TipoPasajero, Itinerario

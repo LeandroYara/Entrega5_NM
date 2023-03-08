@@ -6,7 +6,7 @@ del dominio de vuelos
 """
 
 from abc import ABC
-from entregaalpes.seedwork.dominio.repositorios import Repositorio
+from entregaAlpes.seedwork.dominio.repositorios import Repositorio
 
 class RepositorioSolicitudes(Repositorio, ABC):
     ...

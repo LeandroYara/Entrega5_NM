@@ -1,7 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
 import uuid
-from entregaalpes.seedwork.dominio.eventos import (EventoDominio)
+from entregaAlpes.seedwork.dominio.eventos import (EventoDominio)
 from datetime import datetime
 
 class EventoSolicitud(EventoDominio):

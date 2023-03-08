@@ -1,9 +1,9 @@
-from aeroalpes.seedwork.aplicacion.queries import Query, QueryHandler, QueryResultado
-from aeroalpes.seedwork.aplicacion.queries import ejecutar_query as query
-from aeroalpes.modulos.vuelos.infraestructura.repositorios import RepositorioReservas
+from entregaAlpes.seedwork.aplicacion.queries import Query, QueryHandler, QueryResultado
+from entregaAlpes.seedwork.aplicacion.queries import ejecutar_query as query
+from entregaAlpes.modulos.vuelos.infraestructura.repositorios import RepositorioReservas
 from dataclasses import dataclass
 from .base import ReservaQueryBaseHandler
-from aeroalpes.modulos.vuelos.aplicacion.mapeadores import MapeadorReserva
+from entregaAlpes.modulos.vuelos.aplicacion.mapeadores import MapeadorReserva
 import uuid
 
 @dataclass

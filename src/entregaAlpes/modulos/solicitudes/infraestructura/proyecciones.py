@@ -1,11 +1,11 @@
-from entregaalpes.seedwork.infraestructura.proyecciones import Proyeccion, ProyeccionHandler
-from entregaalpes.seedwork.infraestructura.proyecciones import ejecutar_proyeccion as proyeccion
-from entregaalpes.modulos.solicitudes.infraestructura.fabricas import FabricaRepositorio
-from entregaalpes.modulos.solicitudes.infraestructura.repositorios import RepositorioSolicitudes
-from entregaalpes.modulos.solicitudes.dominio.entidades import Solicitud
-from entregaalpes.modulos.solicitudes.infraestructura.dto import Solicitud as SolicitudDTO
+from entregaAlpes.seedwork.infraestructura.proyecciones import Proyeccion, ProyeccionHandler
+from entregaAlpes.seedwork.infraestructura.proyecciones import ejecutar_proyeccion as proyeccion
+from entregaAlpes.modulos.solicitudes.infraestructura.fabricas import FabricaRepositorio
+from entregaAlpes.modulos.solicitudes.infraestructura.repositorios import RepositorioSolicitudes
+from entregaAlpes.modulos.solicitudes.dominio.entidades import Solicitud
+from entregaAlpes.modulos.solicitudes.infraestructura.dto import Solicitud as SolicitudDTO
 
-from entregaalpes.seedwork.infraestructura.utils import millis_a_datetime
+from entregaAlpes.seedwork.infraestructura.utils import millis_a_datetime
 import datetime
 import logging
 import traceback
@@ -67,15 +67,12 @@ class ProyeccionSolicitudesLista(ProyeccionSolicitud):
                 fecha_creacion=self.fecha_creacion, 
                 fecha_actualizacion=self.fecha_actualizacion))
         
-        # TODO ¿Y si la reserva ya existe y debemos actualizarla? Complete el método para hacer merge
-
-        # TODO ¿Tal vez podríamos reutilizar la Unidad de Trabajo?
         db.session.commit()
 
 class ProyeccionSolicitudHandler(ProyeccionHandler):
     
     def handle(self, proyeccion: ProyeccionSolicitud):
-        from entregaalpes.config.db import db
+        from entregaAlpes.config.db import db
 
         proyeccion.ejecutar(db=db)
         

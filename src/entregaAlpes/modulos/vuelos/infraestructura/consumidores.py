@@ -5,9 +5,9 @@ import time
 import logging
 import traceback
 
-from aeroalpes.modulos.vuelos.infraestructura.schema.v1.eventos import EventoReservaCreada
-from aeroalpes.modulos.vuelos.infraestructura.schema.v1.comandos import ComandoCrearReserva
-from aeroalpes.seedwork.infraestructura import utils
+from entregaAlpes.modulos.vuelos.infraestructura.schema.v1.eventos import EventoReservaCreada
+from entregaAlpes.modulos.vuelos.infraestructura.schema.v1.comandos import ComandoCrearReserva
+from entregaAlpes.seedwork.infraestructura import utils
 
 def suscribirse_a_eventos():
     cliente = None

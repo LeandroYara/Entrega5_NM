@@ -1,7 +1,7 @@
 from datetime import datetime
-from aeroalpes.seedwork.dominio.entidades import Entidad
+from entregaAlpes.seedwork.dominio.entidades import Entidad
 from dataclasses import dataclass, field
-import aeroalpes.modulos.bodegas.dominio.objetos_valor as ov
+import entregaAlpes.modulos.bodega.dominio.objetos_valor as ov
 from .objetos_valor import Nombre, Capacidad, Ubicacion
 
 

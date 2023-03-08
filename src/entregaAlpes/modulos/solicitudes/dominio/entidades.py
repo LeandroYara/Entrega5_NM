@@ -9,9 +9,9 @@ from dataclasses import dataclass, field
 import datetime
 import uuid
 
-import entregaalpes.modulos.solicitudes.dominio.objetos_valor as ov
-from entregaalpes.modulos.solicitudes.dominio.eventos import SolicitudCreada, SolicitudAprobada, SolicitudCancelada, SolicitudPagada
-from entregaalpes.seedwork.dominio.entidades import AgregacionRaiz
+import entregaAlpes.modulos.solicitudes.dominio.objetos_valor as ov
+from entregaAlpes.modulos.solicitudes.dominio.eventos import SolicitudCreada, SolicitudAprobada, SolicitudCancelada, SolicitudPagada
+from entregaAlpes.seedwork.dominio.entidades import AgregacionRaiz
 
 @dataclass
 
@@ -26,25 +26,21 @@ class Solicitud(AgregacionRaiz):
         self.fecha_creacion = datetime.datetime.now()
 
         self.agregar_evento(SolicitudCreada(id_reserva=self.id, id_cliente=self.id_cliente, estado=self.estado.name, fecha_creacion=self.fecha_creacion))
-        # TODO Agregar evento de compensación
 
     def aprobar_solicitud(self):
         self.estado = ov.EstadoSolicitud.APROBADA
         self.fecha_actualizacion = datetime.datetime.now()
 
         self.agregar_evento(SolicitudAprobada(self.id, self.fecha_actualizacion))
-        # TODO Agregar evento de compensación
-
+        
     def cancelar_solicitud(self):
         self.estado = ov.EstadoSolicitud.CANCELADA
         self.fecha_actualizacion = datetime.datetime.now()
 
         self.agregar_evento(SolicitudCancelada(self.id, self.fecha_actualizacion))
-        # TODO Agregar evento de compensación
     
     def pagar_solicitud(self):
         self.estado = ov.EstadoSolicitud.PAGADA
         self.fecha_actualizacion = datetime.datetime.now()
 
         self.agregar_evento(SolicitudPagada(self.id, self.fecha_actualizacion))
-        # TODO Agregar evento de compensación

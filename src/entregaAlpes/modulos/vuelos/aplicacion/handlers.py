@@ -1,6 +1,6 @@
-from aeroalpes.modulos.vuelos.dominio.eventos import ReservaCreada, ReservaCancelada, ReservaAprobada, ReservaPagada
-from aeroalpes.seedwork.aplicacion.handlers import Handler
-from aeroalpes.modulos.vuelos.infraestructura.despachadores import Despachador
+from entregaAlpes.modulos.vuelos.dominio.eventos import ReservaCreada, ReservaCancelada, ReservaAprobada, ReservaPagada
+from entregaAlpes.seedwork.aplicacion.handlers import Handler
+from entregaAlpes.modulos.vuelos.infraestructura.despachadores import Despachador
 
 class HandlerReservaIntegracion(Handler):
 

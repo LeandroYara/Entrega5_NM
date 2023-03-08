@@ -7,10 +7,10 @@ objetos complejos del dominio de vuelos
 
 from .entidades import Solicitud
 from .excepciones import TipoObjetoNoExisteEnDominioEnviosExcepcion
-from entregaalpes.seedwork.dominio.repositorios import Mapeador, Repositorio
-from entregaalpes.seedwork.dominio.fabricas import Fabrica
-from entregaalpes.seedwork.dominio.entidades import Entidad
-from entregaalpes.seedwork.dominio.eventos import EventoDominio
+from entregaAlpes.seedwork.dominio.repositorios import Mapeador, Repositorio
+from entregaAlpes.seedwork.dominio.fabricas import Fabrica
+from entregaAlpes.seedwork.dominio.entidades import Entidad
+from entregaAlpes.seedwork.dominio.eventos import EventoDominio
 from dataclasses import dataclass
 
 @dataclass

@@ -1,11 +1,11 @@
 import pulsar
 from pulsar.schema import *
 
-from entregaalpes.modulos.solicitudes.infraestructura.schema.v1.eventos import EventoReservaCreada, ReservaCreadaPayload
-from entregaalpes.modulos.solicitudes.infraestructura.schema.v1.comandos import ComandoCrearReserva, ComandoCrearReservaPayload
-from entregaalpes.seedwork.infraestructura import utils
+from entregaAlpes.modulos.solicitudes.infraestructura.schema.v1.eventos import EventoReservaCreada, ReservaCreadaPayload
+from entregaAlpes.modulos.solicitudes.infraestructura.schema.v1.comandos import ComandoCrearSolicitud, ComandoCrearSolicitudPayload
+from entregaAlpes.seedwork.infraestructura import utils
 
-from entregaalpes.modulos.solicitudes.infraestructura.mapeadores import MapadeadorEventosSolicitud
+from entregaAlpes.modulos.solicitudes.infraestructura.mapeadores import MapadeadorEventosSolicitud
 
 class Despachador:
     def __init__(self):
@@ -22,10 +22,8 @@ class Despachador:
         self._publicar_mensaje(evento, topico, AvroSchema(evento.__class__))
 
     def publicar_comando(self, comando, topico):
-        # TODO Debe existir un forma de crear el Payload en Avro con base al tipo del comando
-        payload = ComandoCrearReservaPayload(
+        payload = ComandoCrearSolicitudPayload(
             id_usuario=str(comando.id_usuario)
-            # agregar itinerarios
         )
-        comando_integracion = ComandoCrearReserva(data=payload)
-        self._publicar_mensaje(comando_integracion, topico, AvroSchema(ComandoCrearReserva))
+        comando_integracion = ComandoCrearSolicitud(data=payload)
+        self._publicar_mensaje(comando_integracion, topico, AvroSchema(ComandoCrearSolicitud))

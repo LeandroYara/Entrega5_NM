@@ -5,9 +5,9 @@ encargados de la transformación entre formatos de dominio y DTOs
 
 """
 
-from aeroalpes.seedwork.dominio.repositorios import Mapeador
-from aeroalpes.modulos.vuelos.dominio.objetos_valor import NombreAero, Odo, Leg, Segmento, Itinerario, CodigoIATA
-from aeroalpes.modulos.vuelos.dominio.entidades import Proveedor, Aeropuerto, Reserva
+from entregaAlpes.seedwork.dominio.repositorios import Mapeador
+from entregaAlpes.modulos.vuelos.dominio.objetos_valor import NombreAero, Odo, Leg, Segmento, Itinerario, CodigoIATA
+from entregaAlpes.modulos.vuelos.dominio.entidades import Proveedor, Aeropuerto, Reserva
 from .dto import Reserva as ReservaDTO
 from .dto import Itinerario as ItinerarioDTO
 

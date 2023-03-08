@@ -1,6 +1,6 @@
-from entregaalpes.seedwork.infraestructura.vistas import Vista
-from entregaalpes.modulos.solicitudes.dominio.entidades import Solicitud
-from entregaalpes.config.db import db
+from entregaAlpes.seedwork.infraestructura.vistas import Vista
+from entregaAlpes.modulos.solicitudes.dominio.entidades import Solicitud
+from entregaAlpes.config.db import db
 from .dto import Solicitud as SolicitudDTO
 
 class VistaSolicitud(Vista):

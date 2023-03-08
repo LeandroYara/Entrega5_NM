@@ -1,6 +1,6 @@
-from aeroalpes.seedwork.dominio.objetos_valor import ObjetoValor, Ciudad
+from entregaAlpes.seedwork.dominio.objetos_valor import ObjetoValor, Ciudad
 from dataclasses import dataclass
-from aeroalpes.seedwork.dominio.objetos_valor import Codigo, Locacion
+from entregaAlpes.seedwork.dominio.objetos_valor import Codigo, Locacion
 
 @dataclass(frozen=True)
 class Email(ObjetoValor):

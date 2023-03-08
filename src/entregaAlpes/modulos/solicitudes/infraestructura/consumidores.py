@@ -6,13 +6,13 @@ import logging
 import traceback
 import datetime
 
-from entregaalpes.modulos.solicitudes.infraestructura.schema.v1.eventos import EventoReservaCreada
-from entregaalpes.modulos.solicitudes.infraestructura.schema.v1.comandos import ComandoCrearReserva
+from entregaAlpes.modulos.solicitudes.infraestructura.schema.v1.eventos import EventoReservaCreada
+from entregaAlpes.modulos.solicitudes.infraestructura.schema.v1.comandos import ComandoCrearReserva
 
 
-from entregaalpes.modulos.solicitudes.infraestructura.proyecciones import ProyeccionReservasLista, ProyeccionReservasTotales
-from entregaalpes.seedwork.infraestructura.proyecciones import ejecutar_proyeccion
-from entregaalpes.seedwork.infraestructura import utils
+from entregaAlpes.modulos.solicitudes.infraestructura.proyecciones import ProyeccionSolicitudesLista, ProyeccionSolicitudesTotales
+from entregaAlpes.seedwork.infraestructura.proyecciones import ejecutar_proyeccion
+from entregaAlpes.seedwork.infraestructura import utils
 
 def suscribirse_a_eventos(app=None):
     cliente = None
@@ -25,8 +25,8 @@ def suscribirse_a_eventos(app=None):
             datos = mensaje.value().data
             print(f'Evento recibido: {datos}')
 
-            ejecutar_proyeccion(ProyeccionReservasTotales(datos.fecha_creacion, ProyeccionReservasTotales.ADD), app=app)
-            ejecutar_proyeccion(ProyeccionReservasLista(datos.id_reserva, datos.id_cliente, datos.estado, datos.fecha_creacion, datos.fecha_creacion), app=app)
+            ejecutar_proyeccion(ProyeccionSolicitudesTotales(datos.fecha_creacion, ProyeccionSolicitudesTotales.ADD), app=app)
+            ejecutar_proyeccion(ProyeccionSolicitudesLista(datos.id_reserva, datos.id_cliente, datos.estado, datos.fecha_creacion, datos.fecha_creacion), app=app)
             
             consumidor.acknowledge(mensaje)     
 

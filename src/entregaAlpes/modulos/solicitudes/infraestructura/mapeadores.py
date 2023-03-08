@@ -5,11 +5,12 @@ encargados de la transformación entre formatos de dominio y DTOs
 
 """
 
-from entregaalpes.seedwork.dominio.repositorios import Mapeador
-from entregaalpes.seedwork.infraestructura.utils import unix_time_millis
-from entregaalpes.modulos.solicitudes.dominio.objetos_valor import Leg, Segmento
-from entregaalpes.modulos.solicitudes.dominio.entidades import Solicitud
-from entregaalpes.modulos.solicitudes.dominio.eventos import SolicitudAprobada, SolicitudCancelada, SolicitudAprobada, SolicitudPagada, SolicitudCreada, EventoSolicitud
+from entregaAlpes.modulos.solicitudes.infraestructura.schema.v1.eventos import SolicitudCreadaPayload
+from entregaAlpes.seedwork.dominio.repositorios import Mapeador
+from entregaAlpes.seedwork.infraestructura.utils import unix_time_millis
+from entregaAlpes.modulos.solicitudes.dominio.objetos_valor import Leg, Segmento
+from entregaAlpes.modulos.solicitudes.dominio.entidades import Solicitud
+from entregaAlpes.modulos.solicitudes.dominio.eventos import SolicitudAprobada, SolicitudCancelada, SolicitudAprobada, SolicitudPagada, SolicitudCreada, EventoSolicitud
 
 from .dto import Solicitud as SolicitudDTO
 from .excepciones import NoExisteImplementacionParaTipoFabricaExcepcion
@@ -43,7 +44,7 @@ class MapadeadorEventosSolicitud(Mapeador):
         def v1(evento):
             from .schema.v1.eventos import ReservaCreadaPayload, EventoReservaCreada
 
-            payload = ReservaCreadaPayload(
+            payload = SolicitudCreadaPayload(
                 id_reserva=str(evento.id_reserva), 
                 id_cliente=str(evento.id_cliente), 
                 estado=str(evento.estado), 

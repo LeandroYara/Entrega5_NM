@@ -7,5 +7,5 @@ class ComandoEnviarPedidoPayload(ComandoIntegracion):
     courier_name = String()
     # TODO Cree los records para itinerarios
 
-class ComandoCrearReserva(ComandoIntegracion):
+class ComandoEnviarPedido(ComandoIntegracion):
     data = ComandoEnviarPedidoPayload()

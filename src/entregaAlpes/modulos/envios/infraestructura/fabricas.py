@@ -9,15 +9,13 @@ from dataclasses import dataclass, field
 from entregaAlpes.seedwork.dominio.fabricas import Fabrica
 from entregaAlpes.seedwork.dominio.repositorios import Repositorio
 from entregaAlpes.modulos.envios.dominio.repositorios import RepositorioEnvio
-from .repositorios import RepositorioReservasSQLite, RepositorioProveedoresSQLite
-from .excepciones import ExcepcionFabrica
+from .repositorios import RepositorioEnvioSQLite
+from entregaAlpes.seedwork.dominio.excepciones import ExcepcionFabrica
 
 @dataclass
 class FabricaRepositorio(Fabrica):
     def crear_objeto(self, obj: type, mapeador: any = None) -> Repositorio:
-        if obj == RepositorioReservas.__class__:
-            return RepositorioReservasSQLite()
-        elif obj == RepositorioProveedores.__class__:
-            return RepositorioProveedoresSQLite()
+        if obj == RepositorioEnvio.__class__:
+            return RepositorioEnvioSQLite()
         else:
             raise ExcepcionFabrica()

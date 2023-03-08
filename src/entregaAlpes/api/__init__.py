@@ -17,6 +17,7 @@ def importar_modelos_alchemy():
     import entregaAlpes.modulos.precios_dinamicos.infraestructura.dto
     import entregaAlpes.modulos.vehiculos.infraestructura.dto
     import entregaAlpes.modulos.vuelos.infraestructura.dto
+    import entregaAlpes.modulos.envios.infraestructura.dto
 
 def comenzar_consumidor():
     """
@@ -82,6 +83,7 @@ def create_app(configuracion={}):
     from . import precios_dinamicos
     from . import vehiculos
     from . import vuelos
+    from . import envios
 
     # Registro de Blueprints
     app.register_blueprint(cliente.bp)
@@ -90,6 +92,7 @@ def create_app(configuracion={}):
     app.register_blueprint(precios_dinamicos.bp)
     app.register_blueprint(vehiculos.bp)
     app.register_blueprint(vuelos.bp)
+    app.register_blueprint(envios.bp)
 
     @app.route("/spec")
     def spec():

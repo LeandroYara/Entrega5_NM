@@ -22,7 +22,9 @@ facilitaciones = db.Table(
     db.Column("centro_distribucion_direccion", db.String),
     db.Column("cantidad", db.Integer),
     db.ForeignKeyConstraint(
-        ["envio_id", "producto_nombre", "centro_distribucion", "centro_distribucion_direccion", "courier_nombre", "cantidad"],
+        ["producto_nombre", "centro_distribucion", "centro_distribucion_direccion", "cantidad"],
+        ["facilitaciones.producto_nombre", "facilitaciones.centro_distribucion",
+        "facilitaciones.centro_distribucion_direccion", "facilitaciones.cantidad"],
     )
 )
 

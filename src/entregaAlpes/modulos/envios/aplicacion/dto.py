@@ -29,12 +29,21 @@ class FacilitacionDTO(DTO):
 class Courier(DTO):
     nombre: str
 
+
 @dataclass(frozen=True)
 class EnvioDTO(DTO):
     fecha_creacion: str = field(default_factory=str)
     fecha_actualizacion: str = field(default_factory=str)
     id: str = field(default_factory=str)
-    destino: str  = field(default_factory=str)
     facilitaciones: list[FacilitacionDTO] = field(default_factory=list)
-    courier: CourierDTO
-    destino: DestinoDTO
+    destino: DestinoDTO = field(default_factory=DestinoDTO)
+
+
+@dataclass(frozen=True)
+class EnvioCourierDTO(DTO):
+    fecha_creacion: str = field(default_factory=str)
+    fecha_actualizacion: str = field(default_factory=str)
+    id: str = field(default_factory=str)
+    facilitaciones: list[FacilitacionDTO] = field(default_factory=list)
+    courier: CourierDTO = field(default_factory=CourierDTO)
+    destino: DestinoDTO = field(default_factory=DestinoDTO)

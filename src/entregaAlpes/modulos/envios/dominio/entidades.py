@@ -17,8 +17,8 @@ class Envio(AgregacionRaiz):
     id_cliente: uuid.UUID = field(hash=True, default=None)
     id_pedido: uuid.UUID = field(hash=True, default=None)
     estado: ov.EstadoEnvio = field(default=ov.EstadoEnvio.PENDIENTE)
-    courier: ov.Courier
-    destino: ov.Destino
+    courier: ov.Courier = field(default=None)
+    destino: ov.Destino = field(default=None)
     facilitaciones: list[ov.Facilitacion] = field(default_factory=list[ov.Facilitacion])
 
     def reprogramar_envio(self):

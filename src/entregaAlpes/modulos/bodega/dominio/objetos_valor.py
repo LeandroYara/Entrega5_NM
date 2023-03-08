@@ -1,12 +1,7 @@
-from entregaAlpes.seedwork.dominio.objetos_valor import ObjetoValor, Ciudad
+from entregaAlpes.seedwork.dominio.objetos_valor import ObjetoValor
 from dataclasses import dataclass
 from entregaAlpes.seedwork.dominio.objetos_valor import Codigo, Locacion
-
-@dataclass(frozen=True)
-class Email(ObjetoValor):
-    address: str
-    dominio: str
-    es_empresarial: bool
+from entregaAlpes.modulos.item.dominio.entidades import Item
 
 @dataclass(frozen=True)
 class Capacidad(ObjetoValor):
@@ -17,6 +12,7 @@ class Ubicacion(ObjetoValor):
     latitud: float
     longitud: float
     nombre: str
+
 @dataclass(frozen=True)
 class Nombre(ObjetoValor):
     nombre: str

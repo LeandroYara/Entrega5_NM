@@ -6,7 +6,7 @@ from entregaAlpes.seedwork.aplicacion.comandos import ejecutar_commando as coman
 
 from entregaAlpes.modulos.envios.dominio.entidades import Envio
 from entregaAlpes.seedwork.infraestructura.uow import UnidadTrabajoPuerto
-from entregaAlpes.modulos.envios.aplicacion.mapeadores import 
+from entregaAlpes.modulos.envios.aplicacion.mapeadores import MapeadorEnvio
 from entregaAlpes.modulos.envios.infraestructura.repositorios import RepositorioReservas
 
 @dataclass
@@ -30,7 +30,7 @@ class EnviarPorEdaHandler(EnvioBaseHandler):
             ,   courier=comando.courier
             ,   destino=comando.destino)
 
-        envio: Envio = self.fabrica_envios.crear_objeto(envio_dto, MapeadorReserva())
+        envio: Envio = self.fabrica_envios.crear_objeto(envio_dto, MapeadorEnvio())
         envio.crear_reserva(envio)
 
         repositorio = self.fabrica_repositorio.crear_objeto(RepositorioReservas.__class__)

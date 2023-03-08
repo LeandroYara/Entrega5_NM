@@ -42,6 +42,6 @@ class EnviarPorEdaHandler(EnvioBaseHandler):
 
 @comando.register(EnviarPorEda)
 def ejecutar_comando_crear_reserva(comando: EnviarPorEda):
-    handler = CrearReservaHandler()
+    handler = EnviarPorEdaHandler()
     handler.handle(comando)
     

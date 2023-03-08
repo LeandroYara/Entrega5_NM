@@ -8,6 +8,8 @@ import traceback
 from aeroalpes.modulos.vuelos.infraestructura.schema.v1.eventos import EventoReservaCreada
 from aeroalpes.modulos.vuelos.infraestructura.schema.v1.comandos import ComandoCrearReserva
 from aeroalpes.seedwork.infraestructura import utils
+#from aeroalpes.seedwork.aplicacion.comandos import ejecutar_commando
+from pydispatch import dispatcher
 
 def suscribirse_a_eventos():
     cliente = None
@@ -37,8 +39,9 @@ def suscribirse_a_comandos():
         while True:
             mensaje = consumidor.receive()
             print(f'Comando recibido: {mensaje.value().data}')
-
-            consumidor.acknowledge(mensaje)     
+            # TODO: enviar por dispatcher a capa aplicacion
+            dispatcher.send(signal=f'{ComandoCrearReserva.__name__}', comando=mensaje.value().data)
+            consumidor.acknowledge(mensaje)
             
         cliente.close()
     except:

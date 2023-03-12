@@ -11,61 +11,24 @@ from entregaAlpes.modulos.bodega.dominio.entidades import Orden
 from .dto import Reserva as ReservaDTO
 from .dto import Itinerario as ItinerarioDTO
 
+from .dto import Orden as OrdenDTO
+
 class MapeadorReserva(Mapeador):
     _FORMATO_FECHA = '%Y-%m-%dT%H:%M:%SZ'
-
-    def _procesar_itinerario_dto(self, itinerarios_dto: list) -> list[Orden]:
-        return None
-        itin_dict = dict()
-        
-        for itin in itinerarios_dto:
-            destino = Aeropuerto(codigo=itin.destino_codigo, nombre=None)
-            origen = Aeropuerto(codigo=itin.origen_codigo, nombre=None)
-            fecha_salida = itin.fecha_salida
-            fecha_llegada = itin.fecha_llegada
-
-            itin_dict.setdefault(str(itin.odo_orden),{}).setdefault(str(itin.segmento_orden), {}).setdefault(str(itin.leg_orden), Leg(fecha_salida, fecha_llegada, origen, destino))
-
-        odos = list()
-        for k, odos_dict in itin_dict.items():
-            segmentos = list()
-            for k, seg_dict in odos_dict.items():
-                legs = list()
-                for k, leg in seg_dict.items():
-                    legs.append(leg)
-                segmentos.append(Segmento(legs))
-            odos.append(Odo(segmentos))
-
-        return [Itinerario(odos)]
-
-    def _procesar_itinerario(self, itinerario: any) -> list[ItinerarioDTO]:
-        return None
 
     def obtener_tipo(self) -> type:
         return Orden.__class__
 
-    def entidad_a_dto(self, entidad: Orden) -> ReservaDTO:
+    def entidad_a_dto(self, entidad: Orden) -> OrdenDTO:
+        #Esto toca actualizarlo con las listas de objetos
+        fecha_creacion = entidad.fecha_creacion.strftime(self._FORMATO_FECHA)
+        fecha_actualizacion = entidad.fecha_actualizacion.strftime(self._FORMATO_FECHA)
+        _id = str(entidad.id)
+        estado =entidad.estado
+        #itinerarios = list()
+        return OrdenDTO(fecha_creacion, fecha_actualizacion, _id, estado)
+
+    def dto_a_entidad(self, dto: OrdenDTO) -> Orden:
+        Orden = Orden()
         
-        reserva_dto = ReservaDTO()
-        reserva_dto.fecha_creacion = entidad.fecha_creacion
-        reserva_dto.fecha_actualizacion = entidad.fecha_actualizacion
-        reserva_dto.id = str(entidad.id)
-
-        itinerarios_dto = list()
-        
-        for itinerario in entidad.itinerarios:
-            itinerarios_dto.extend(self._procesar_itinerario(itinerario))
-
-        reserva_dto.itinerarios = itinerarios_dto
-
-        return reserva_dto
-
-    def dto_a_entidad(self, dto: ReservaDTO) -> Orden:
-        reserva = Orden(dto.id, dto.fecha_creacion, dto.fecha_actualizacion)
-        reserva.itinerarios = list()
-
-        itinerarios_dto: list[ItinerarioDTO] = dto.itinerarios
-
-        reserva.itinerarios.extend(self._procesar_itinerario_dto(itinerarios_dto))
-        
-        return reserva
+        return Orden

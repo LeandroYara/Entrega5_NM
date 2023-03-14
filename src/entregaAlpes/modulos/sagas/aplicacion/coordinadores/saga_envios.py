@@ -40,14 +40,23 @@ class CoordinadorEnvios(CoordinadorOrquestacion):
         # Por ejemplo si el evento que llega es EnvioCreada y el tipo_comando es PagarEnvio
         # Debemos usar los atributos de EnvioCreada para crear el comando PagarEnvio
         print(f"########### PROCESANDO {evento} #############")
-        print(evento, tipo_comando)
+        if isinstance(evento, EnvioCreado) and tipo_comando is DefinirCourier:
+            comando = DefinirCourier(
+                fecha_creacion=evento.fecha_creacion,
+                fecha_actualizacion=evento.fecha_actualizacion,
+                id=evento.id,
+                facilitaciones=evento.facilitaciones,
+                destino=evento.destino
+            )  # TODO: pasar valores
+            return comando
+
 
 
 # TODO Agregue un Listener/Handler para que se puedan redireccionar eventos de dominio
-def oir_mensaje(mensaje):
-    if isinstance(mensaje, EventoDominio):
+def oir_mensaje(evento):
+    if isinstance(evento, EventoDominio):
         coordinador = CoordinadorEnvios()
         coordinador.inicializar_pasos()
-        coordinador.procesar_evento(mensaje)
+        coordinador.procesar_evento(evento)
     else:
         raise NotImplementedError("El mensaje no es evento de Dominio")

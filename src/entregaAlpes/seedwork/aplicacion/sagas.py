@@ -19,6 +19,7 @@ class CoordinadorSaga(ABC):
 
     def publicar_comando(self,evento: EventoDominio, tipo_comando: type):
         comando = self.construir_comando(evento, tipo_comando)
+        print("################# publicar_comando #####################", comando)
         ejecutar_commando(comando)
 
     @abstractmethod
@@ -87,6 +88,6 @@ class CoordinadorOrquestacion(CoordinadorSaga, ABC):
         elif isinstance(evento, paso.error):
             self.publicar_comando(evento, self.pasos[index-1].compensacion)
         elif isinstance(evento, paso.evento):
-            self.publicar_comando(evento, self.pasos[index].comando)
+            self.publicar_comando(evento, self.pasos[index + 1].comando)
 
 

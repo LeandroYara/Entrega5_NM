@@ -56,7 +56,7 @@ class MapeadorEnvio(RepMap):
                     cantidad=facilitacion.cantidad,
                 )
             )
-        
+        print(f"################### entidad_a_dto IDDDDDDD {_id}")
         return EnvioDTO(
             fecha_creacion, fecha_actualizacion, _id, 
             DestinoDTO(nombre=entidad.destino.nombre, direccion=entidad.destino.direccion),
@@ -88,6 +88,7 @@ class MapeadorEnvio(RepMap):
             ))
         envio.id_pedido = dto.id_pedido
         envio.facilitaciones = facilitaciones
+        print(f"################### dto_a_entidad IDDDDDDD {dto.id}")
         return envio
 
 

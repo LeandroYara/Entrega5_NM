@@ -24,7 +24,8 @@ class Envio(AgregacionRaiz):
     def crear_envio(self):
         self.estado = ov.EstadoEnvio.PENDIENTE
 
-        self.agregar_evento(EnvioCreado(self.id_pedido, self.fecha_actualizacion))
+        self.agregar_evento(EnvioCreado(id=self.id, id_pedido=self.id_pedido,
+         facilitaciones=self.facilitaciones, destino=self.destino))
 
     def reprogramar_envio(self):
         self.estado = ov.EstadoEnvio.REPROGRAMADO

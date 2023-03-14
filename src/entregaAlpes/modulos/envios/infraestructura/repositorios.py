@@ -39,9 +39,10 @@ class RepositorioEnvioSQLite(RepositorioEnvio):
         envio_dto: EnvioDTO = self.fabrica_envios.crear_objeto(envio, MapeadorEnvio())
         db.session.add(envio_dto)
 
-    def actualizar(self, Envio: Envio):
-        # TODO
-        raise NotImplementedError
+    def actualizar(self, envio: Envio):
+        envio_dto: EnvioDTO = self.fabrica_envios.crear_objeto(envio, MapeadorEnvio())
+        db.session.add(envio_dto)
+        
 
     def eliminar(self, Envio_id: UUID):
         # TODO

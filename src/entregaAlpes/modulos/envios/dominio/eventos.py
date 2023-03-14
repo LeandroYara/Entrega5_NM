@@ -8,7 +8,6 @@ from entregaAlpes.modulos.envios.aplicacion.dto import EnvioDTO, FacilitacionDTO
 
 @dataclass
 class EnvioCreado(EventoDominio):
-    id_pedido: uuid.UUID = None
     fecha_actualizacion: datetime = None
     fecha_creacion: datetime = None
     id: str

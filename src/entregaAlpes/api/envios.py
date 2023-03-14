@@ -30,7 +30,8 @@ def enviar_asincrona():
         # TODO Reemplaze es todo código sincrono y use el broker de eventos para propagar este comando de forma asíncrona
         # Revise la clase Despachador de la capa de infraestructura
         # ejecutar_commando(comando)
-        evento = EnvioCreado(envio_dto)
+        evento = EnvioCreado(envio_dto.id, envio_dto.fecha_creacion, envio_dto.id_pedido,
+        envio_dto.fecha_actualizacion, envio_dto.fecha_creacion, envio_dto.facilitaciones, envio_dto.destino)
         dispatcher.send(signal=f'{type(evento).__name__}Dominio', mensaje=evento)
         
         return Response('{}', status=202, mimetype='application/json')

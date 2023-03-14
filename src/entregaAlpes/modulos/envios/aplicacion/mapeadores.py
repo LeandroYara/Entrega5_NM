@@ -10,12 +10,9 @@ class  MapeadorEnvioDTOJson(AppMap):
     def externo_a_dto(self, externo: dict) -> EnvioDTO:
         facilitaciones: list[FacilitacionDTO] = list()
         for facilitacion in externo.get('facilitaciones', list()):
-            envio_dto.facilitaciones.append(FacilitacionDTO(
-                producto=ProductoDTO(nombre=facilitacion.get('producto')),
-                centro_distribucion=CentroDistribucionDTO(
-                    nombre=facilitacion.get('centro_distribucion_nombre'),
-                    direccion=facilitacion.get('centro_distribucion_direccion')
-                ),
+            facilitaciones.append(FacilitacionDTO(
+                producto=ProductoDTO(**facilitacion.get('producto')),
+                centro_distribucion=CentroDistribucionDTO(**facilitacion.get('centro_distribucion')),
                 cantidad=facilitacion.get("cantidad")
             ))
         
@@ -24,6 +21,8 @@ class  MapeadorEnvioDTOJson(AppMap):
             nombre=externo.get("destino").get("nombre"),
             direccion=externo.get("destino").get("direccion")),
             facilitaciones=facilitaciones,
+            courier=None,
+            id_pedido=externo.get("id_pedido")
         )
 
         return envio_dto
@@ -61,12 +60,16 @@ class MapeadorEnvio(RepMap):
         return EnvioDTO(
             fecha_creacion, fecha_actualizacion, _id, 
             DestinoDTO(nombre=entidad.destino.nombre, direccion=entidad.destino.direccion),
-            facilitacion_dtos, CourierDTO(entidad.courier.nombre)
+            facilitacion_dtos, CourierDTO(entidad.courier.nombre), entidad.id_pedido
         )
 
     def dto_a_entidad(self, dto: EnvioDTO) -> Envio:
         envio = Envio()
-        envio.courier = Courier(dto.courier.nombre)
+        envio.courier = Courier("")
+        if dto.courier:
+            # Esto puede ser None la primera vez ya que el Courier que enviara el Envio
+            # se determina en un paso de la SAGA y tambien se actualizara este campo
+            envio.courier = Courier(dto.courier.nombre)
         envio.destino = Destino(
             nombre=dto.destino.nombre,
             direccion=dto.destino.direccion,
@@ -83,7 +86,7 @@ class MapeadorEnvio(RepMap):
                 ),
                 cantidad=facilitacion.cantidad
             ))
-        
+        envio.id_pedido = dto.id_pedido
         envio.facilitaciones = facilitaciones
         return envio
 

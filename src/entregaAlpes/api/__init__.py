@@ -76,6 +76,9 @@ def create_app(configuracion={}):
         if not app.config.get('TESTING'):
             comenzar_consumidor()
 
+        from entregaAlpes.modulos.sagas.aplicacion.coordinadores.saga_envios import CoordinadorEnvios
+        CoordinadorEnvios()
+
      # Importa Blueprints
     from . import cliente
     from . import hoteles

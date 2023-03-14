@@ -12,7 +12,7 @@ class CantidadMinimaPorProductoFacilitado(ReglaNegocio):
 
     productos_facilitados: list[Facilitacion]
 
-    def __init__(self, productos_facilitados, mensaje='Al menos un adulto debe ser parte del itinerario'):
+    def __init__(self, productos_facilitados, mensaje='La cantidad de los productos facilitados debe ser mayor a 0'):
         super().__init__(mensaje)
         self.productos_facilitados = productos_facilitados
 

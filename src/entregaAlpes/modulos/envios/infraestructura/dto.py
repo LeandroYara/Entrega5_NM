@@ -13,36 +13,38 @@ import uuid
 
 Base = db.declarative_base()
 
-facilitaciones = db.Table(
+envios_facilitaciones = db.Table(
     "envios_facilitaciones",
     db.Model.metadata,
-    db.Column("envio_id", db.Integer, db.ForeignKey("envios.id")),
-    db.Column("producto_nombre", db.String),
-    db.Column("centro_distribucion", db.String),
-    db.Column("centro_distribucion_direccion", db.String),
+    db.Column("envio_id", db.String(40), db.ForeignKey("envios.id")),
+    db.Column("id_pedido", db.String(40)),
+    db.Column("producto_nombre", db.String(250)),
+    db.Column("centro_distribucion", db.String(250)),
+    db.Column("centro_distribucion_direccion", db.String(250)),
     db.Column("cantidad", db.Integer),
     db.ForeignKeyConstraint(
-        ["producto_nombre", "centro_distribucion", "centro_distribucion_direccion", "cantidad"],
-        ["facilitaciones.producto_nombre", "facilitaciones.centro_distribucion",
+        ["id_pedido", "producto_nombre", "centro_distribucion", "centro_distribucion_direccion", "cantidad"],
+        ["facilitaciones.id_pedido", "facilitaciones.producto_nombre", "facilitaciones.centro_distribucion",
         "facilitaciones.centro_distribucion_direccion", "facilitaciones.cantidad"],
     )
 )
 
 class Facilitacion(db.Model):
     __tablename__ = "facilitaciones"
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
-    producto_nombre = db.Column(db.String, nullable=False, primary_key=True)
-    centro_distribucion = db.Column(db.String, nullable=False, primary_key=True)
-    centro_distribucion_direccion = db.Column(db.String, nullable=False, primary_key=True)
+    id_pedido = db.Column(db.String(40), primary_key=True)
+    producto_nombre = db.Column(db.String(250), nullable=False, primary_key=True)
+    centro_distribucion = db.Column(db.String(250), nullable=False, primary_key=True)
+    centro_distribucion_direccion = db.Column(db.String(250), nullable=False, primary_key=True)
     cantidad = db.Column(db.Integer, nullable=False, primary_key=True)
 
 
 class Envio(db.Model):
     __tablename__ = "envios"
-    id = db.Column(db.String, primary_key=True)
+    id = db.Column(db.String(40), primary_key=True)
+    id_pedido = db.Column(db.String(40), primary_key=True)
     fecha_creacion = db.Column(db.DateTime, nullable=False)
     fecha_actualizacion = db.Column(db.DateTime, nullable=False)
-    courier_nombre = db.Column(db.String, nullable=False, primary_key=True)
-    destino_nombre = db.Column(db.String, nullable=False, primary_key=True)
-    destino_direccion = db.Column(db.String, nullable=False, primary_key=True)
-    facilitaciones = db.relationship('Facilitacion', secondary=facilitaciones, backref='envios')
+    courier_nombre = db.Column(db.String(250), nullable=True)
+    destino_nombre = db.Column(db.String(250), nullable=False)
+    destino_direccion = db.Column(db.String(250), nullable=False)
+    facilitaciones = db.relationship('Facilitacion', secondary=envios_facilitaciones, backref='envios')

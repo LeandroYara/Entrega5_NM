@@ -23,10 +23,13 @@ class MapeadorEnvio(Mapeador):
         envio_dto.fecha_creacion = entidad.fecha_creacion
         envio_dto.fecha_actualizacion = entidad.fecha_actualizacion
         envio_dto.id = str(entidad.id)
-        envio_dto.courier_nombre = entidad.courier.nombre
+        if entidad.courier:
+            # Esto puede ser None la primera vez ya que el Courier que enviara el Envio
+            # se determina en un paso de la SAGA y tambien se actualizara este campo
+            envio_dto.courier_nombre = entidad.courier.nombre
         envio_dto.destino_nombre = entidad.destino.nombre
         envio_dto.destino_direccion = entidad.destino.direccion
-
+        envio_dto.id_pedido = entidad.id_pedido
         facilitacion_dtos = list()
         
         for facilitacion in entidad.facilitaciones:
@@ -36,6 +39,7 @@ class MapeadorEnvio(Mapeador):
                     centro_distribucion = facilitacion.centro_distribucion.nombre,
                     centro_distribucion_direccion = facilitacion.centro_distribucion.direccion,
                     cantidad = facilitacion.cantidad,
+                    id_pedido = envio_dto.id_pedido
                 )
             )
 
@@ -64,6 +68,7 @@ class MapeadorEnvio(Mapeador):
                 cantidad=facilitacion.cantidad,
             ) for facilitacion in dto.facilitaciones
         ]
+        envio.id_pedido = dto.id_pedido
 
         envio.facilitaciones = facilitacion_dtos
         return envio

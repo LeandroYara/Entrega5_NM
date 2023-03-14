@@ -15,7 +15,7 @@ from entregaAlpes.seedwork.dominio.excepciones import ExcepcionFabrica
 @dataclass
 class FabricaRepositorio(Fabrica):
     def crear_objeto(self, obj: type, mapeador: any = None) -> Repositorio:
-        if obj == RepositorioEnvio.__class__:
+        if obj == RepositorioEnvio:
             return RepositorioEnvioSQLite()
         else:
-            raise ExcepcionFabrica()
+            raise ExcepcionFabrica(f"No se puede crear la fabrica para {obj}")

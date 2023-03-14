@@ -13,7 +13,10 @@ from entregaAlpes.modulos.envios.dominio.fabricas import FabricaEnvios
 from .dto import Envio as EnvioDTO
 from .mapeadores import MapeadorEnvio
 from uuid import UUID
+import logging
 
+logging.basicConfig()
+logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
 
 class RepositorioEnvioSQLite(RepositorioEnvio):
 
@@ -32,8 +35,8 @@ class RepositorioEnvioSQLite(RepositorioEnvio):
         # TODO
         raise NotImplementedError
 
-    def agregar(self, Envio: Envio):
-        envio_dto = self.fabrica_envios.crear_objeto(Envio, MapeadorEnvio())
+    def agregar(self, envio: Envio):
+        envio_dto: EnvioDTO = self.fabrica_envios.crear_objeto(envio, MapeadorEnvio())
         db.session.add(envio_dto)
 
     def actualizar(self, Envio: Envio):

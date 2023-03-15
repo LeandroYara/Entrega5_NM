@@ -46,8 +46,9 @@ class CoordinadorEnvios(CoordinadorOrquestacion):
                 fecha_actualizacion=evento.fecha_actualizacion,
                 id=evento.id,
                 facilitaciones=evento.facilitaciones,
-                destino=evento.destino
-            )  # TODO: pasar valores
+                destino=evento.destino,
+                id_pedido=evento.id_pedido
+            )
             return comando
 
 

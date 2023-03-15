@@ -27,8 +27,18 @@ class RepositorioEnvioSQLite(RepositorioEnvio):
     def fabrica_envios(self):
         return self._fabrica_envios
 
+    def _obtener_por_id(self, id: UUID) -> EnvioDTO:
+        return db.session.query(EnvioDTO).filter_by(id=str(id)).one()
+
+    def _obtener_por_id_pedido(self, id_pedido: UUID) -> EnvioDTO:
+        return db.session.query(EnvioDTO).filter_by(id_pedido=str(id_pedido)).one()
+
     def obtener_por_id(self, id: UUID) -> Envio:
-        envio_dto = db.session.query(EnvioDTO).filter_by(id=str(id)).one()
+        envio_dto = self._obtener_por_id(id=id)
+        return self.fabrica_envios.crear_objeto(envio_dto, MapeadorEnvio())
+    
+    def obtener_por_id_pedido(self, id_pedido: UUID) -> Envio:
+        envio_dto = self._obtener_por_id_pedido(id_pedido=id_pedido)
         return self.fabrica_envios.crear_objeto(envio_dto, MapeadorEnvio())
 
     def obtener_todos(self) -> list[Envio]:
@@ -40,9 +50,9 @@ class RepositorioEnvioSQLite(RepositorioEnvio):
         db.session.add(envio_dto)
 
     def actualizar(self, envio: Envio):
-        envio_dto: EnvioDTO = self.fabrica_envios.crear_objeto(envio, MapeadorEnvio())
+        envio_dto = self._obtener_por_id_pedido(id_pedido=envio.id_pedido)
+        envio.courier = envio.courier
         db.session.add(envio_dto)
-        
 
     def eliminar(self, Envio_id: UUID):
         # TODO

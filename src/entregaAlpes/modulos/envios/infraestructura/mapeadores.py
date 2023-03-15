@@ -17,7 +17,7 @@ class MapeadorEnvio(Mapeador):
     def obtener_tipo(self) -> type:
         return Envio.__class__
 
-    def entidad_a_dto(self, entidad: Envio) -> EnvioDTO:
+    def entidad_a_dto(self, entidad: Envio, envio_dto: EnvioDTO = None) -> EnvioDTO:
         
         envio_dto = EnvioDTO()
         envio_dto.fecha_creacion = entidad.fecha_creacion

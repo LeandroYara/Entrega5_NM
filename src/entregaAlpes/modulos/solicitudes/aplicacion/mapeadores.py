@@ -31,7 +31,9 @@ class MapeadorSolicitud(RepMap):
                 ,   nombre=locacion.nombre
                 ,   fecha_actualizacion=locacion.fecha_actualizacion.strftime(self._FORMATO_FECHA)
                 ,   fecha_creacion=locacion.fecha_creacion.strftime(self._FORMATO_FECHA)
-                ,   cliente=locacion.cliente
+                ,   monto = locacion.monto
+                ,   id_cliente=locacion.id_cliente
+                ,   id_solicitud=locacion.id_solicitud
         )
         
 

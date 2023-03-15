@@ -1,4 +1,4 @@
-from entregaAlpes.modulos.solicitudes.infraestructura.mapeadores import MapeadorReserva
+from entregaAlpes.modulos.solicitudes.infraestructura.mapeadores import MapeadorSolicitud
 from entregaAlpes.seedwork.aplicacion.comandos import Comando
 from entregaAlpes.modulos.solicitudes.aplicacion.dto import SolicitudDTO
 from .base import CrearSolicitudBaseHandler
@@ -20,14 +20,14 @@ class CrearSolicitud(Comando):
 
 class CrearSolicitudHandler(CrearSolicitudBaseHandler):
     
-    def handle(self, comando: CrearSolicitud):
+    def handle(self, comando: CrearSolicitud): 
         solicitud_dto = SolicitudDTO(
                 fecha_actualizacion=comando.fecha_actualizacion
             ,   fecha_creacion=comando.fecha_creacion
             ,   id=comando.id
             ,   cliente=comando.cliente)
 
-        solicitud: Solicitud = self.fabrica_vuelos.crear_objeto(solicitud_dto, MapeadorReserva())
+        solicitud: Solicitud = self.fabrica_solicitudes.crear_objeto(solicitud_dto, MapeadorSolicitud())
         solicitud.crear_solicitud(solicitud)
 
         repositorio = self.fabrica_repositorio.crear_objeto(RepositorioSolicitudes)

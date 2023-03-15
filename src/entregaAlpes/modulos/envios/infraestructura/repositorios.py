@@ -6,14 +6,15 @@ persistir objetos dominio (agregaciones) en la capa de infraestructura del domin
 """
 
 from entregaAlpes.config.db import db
-from entregaAlpes.modulos.envios.dominio.repositorios import RepositorioEnvio
+from entregaAlpes.modulos.envios.dominio.repositorios import RepositorioEnvio, RepositorioLogisticaEnvio
 from entregaAlpes.modulos.envios.dominio.objetos_valor import CentroDistribucion, Producto, Facilitacion
-from entregaAlpes.modulos.envios.dominio.entidades import Envio
+from entregaAlpes.modulos.envios.dominio.entidades import Envio, LogisticaEnvio
 from entregaAlpes.modulos.envios.dominio.fabricas import FabricaEnvios
-from .dto import Envio as EnvioDTO
-from .mapeadores import MapeadorEnvio
+from .dto import Envio as EnvioDTO, LogisticaEnvio as LogisticaEnvioDTO
+from .mapeadores import MapeadorEnvio, MapeadorLogisticaEnvio
 from uuid import UUID
 import logging
+from sqlalchemy import update
 
 logging.basicConfig()
 logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
@@ -50,10 +51,40 @@ class RepositorioEnvioSQLite(RepositorioEnvio):
         db.session.add(envio_dto)
 
     def actualizar(self, envio: Envio):
-        envio_dto = self._obtener_por_id_pedido(id_pedido=envio.id_pedido)
-        envio.courier = envio.courier
-        db.session.add(envio_dto)
+        # TODO
+        raise NotImplementedError
 
     def eliminar(self, Envio_id: UUID):
+        # TODO
+        raise NotImplementedError
+
+
+
+class RepositorioLogisticaEnvioSQLite(RepositorioLogisticaEnvio):
+
+    def __init__(self):
+        self._fabrica_envios: FabricaEnvios = FabricaEnvios()
+
+    @property
+    def fabrica_envios(self):
+        return self._fabrica_envios
+
+    def agregar(self, logistica_envio: LogisticaEnvio):
+        envio_dto: LogisticaEnvioDTO = self.fabrica_envios.crear_objeto(logistica_envio, MapeadorLogisticaEnvio())
+        db.session.add(envio_dto)
+    
+    def actualizar(self, logistica_envio: LogisticaEnvio):
+        # TODO
+        raise NotImplementedError
+
+    def eliminar(self, logistica_envio_id: UUID):
+        # TODO
+        raise NotImplementedError
+    
+    def obtener_por_id(self, id: UUID) -> LogisticaEnvio:
+        # TODO
+        raise NotImplementedError
+    
+    def obtener_todos(self) -> list[LogisticaEnvio]:
         # TODO
         raise NotImplementedError

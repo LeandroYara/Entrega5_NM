@@ -50,7 +50,15 @@ class CoordinadorEnvios(CoordinadorOrquestacion):
                 id_pedido=evento.id_pedido
             )
             return comando
-
+        if isinstance(evento, EnvioCourierDefinido) and tipo_comando is ConfirmarCourier:
+            comando = ConfirmarCourier(
+                id=evento.id,
+                facilitaciones=evento.facilitaciones,
+                destino=evento.destino,
+                id_pedido=evento.id_pedido,
+                courier=evento.courier
+            )
+            return comando
 
 
 # TODO Agregue un Listener/Handler para que se puedan redireccionar eventos de dominio

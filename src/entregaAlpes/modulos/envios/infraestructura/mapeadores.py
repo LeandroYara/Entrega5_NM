@@ -7,8 +7,8 @@ encargados de la transformación entre formatos de dominio y DTOs
 
 from entregaAlpes.seedwork.dominio.repositorios import Mapeador
 from entregaAlpes.modulos.envios.dominio.objetos_valor import CentroDistribucion, Producto, Facilitacion, Courier, Destino
-from entregaAlpes.modulos.envios.dominio.entidades import Envio
-from .dto import Envio as EnvioDTO
+from entregaAlpes.modulos.envios.dominio.entidades import Envio, LogisticaEnvio
+from .dto import Envio as EnvioDTO, LogisticaEnvio as LogisticaEnvioDTO
 from .dto import Facilitacion as FacilitacionDTO
 
 class MapeadorEnvio(Mapeador):
@@ -72,3 +72,22 @@ class MapeadorEnvio(Mapeador):
 
         envio.facilitaciones = facilitacion_dtos
         return envio
+    
+
+class MapeadorLogisticaEnvio(Mapeador):
+    def obtener_tipo(self) -> type:
+        return LogisticaEnvio.__class__
+    
+    def entidad_a_dto(self, entidad: LogisticaEnvio) -> LogisticaEnvioDTO:
+        print("################# MapeadorLogisticaEnvio.entidad_a_dto ######################")
+        logistica_envio_dto = LogisticaEnvioDTO()
+        logistica_envio_dto.id = str(entidad.id)
+        logistica_envio_dto.courier_nombre = entidad.courier.nombre
+        logistica_envio_dto.is_externo = entidad.courier.is_externo
+        logistica_envio_dto.id_pedido = entidad.id_pedido
+        logistica_envio_dto.fecha_creacion = entidad.fecha_creacion
+        logistica_envio_dto.fecha_actualizacion = entidad.fecha_actualizacion
+        return logistica_envio_dto
+
+    def dto_a_entidad(self, dto: LogisticaEnvioDTO) -> LogisticaEnvio:
+        print("################# MapeadorLogisticaEnvio.dto_a_entidad ######################")

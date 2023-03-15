@@ -12,6 +12,19 @@ from entregaAlpes.modulos.envios.dominio.eventos import EnvioCancelado, EnvioCou
 from entregaAlpes.seedwork.dominio.entidades import AgregacionRaiz, Entidad
 
 
+# TODO: mover a microservicio logistica_envio
+# No debe tener ForeignKey a Envio
+@dataclass
+class LogisticaEnvio(AgregacionRaiz):
+    id_cliente: uuid.UUID = field(hash=True, default=None)
+    id_pedido: uuid.UUID = field(hash=True, default=None)
+    courier: ov.Courier = field(default=None)
+
+    def definir_courier(self):
+        self.estado = ov.EstadoEnvio.ENVIO_EDA
+
+        self.agregar_evento(EnvioCourierDefinido(self.id_pedido, self.fecha_actualizacion))
+
 @dataclass
 class Envio(AgregacionRaiz):
     id_cliente: uuid.UUID = field(hash=True, default=None)

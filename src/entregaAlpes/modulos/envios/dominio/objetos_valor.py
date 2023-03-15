@@ -15,6 +15,7 @@ from enum import Enum
 @dataclass(frozen=True)
 class Courier(ObjetoValor):
     nombre: str
+    is_externo: bool = False
 
 @dataclass(frozen=True)
 class Producto(ObjetoValor):

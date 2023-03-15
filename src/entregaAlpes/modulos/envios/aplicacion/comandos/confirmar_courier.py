@@ -11,33 +11,29 @@ from entregaAlpes.modulos.envios.infraestructura.repositorios import Repositorio
 
 @dataclass
 class ConfirmarCourier(Comando):
-    fecha_creacion: str
-    fecha_actualizacion: str
     id: str
     facilitaciones: list[FacilitacionDTO]
     courier: CourierDTO
     destino: DestinoDTO
+    id_pedido: str
 
 
 class ConfirmarCourierHandler(EnvioBaseHandler):
     
     def handle(self, comando: ConfirmarCourier):
-        envio_dto = EnvioDTO(
-                fecha_actualizacion=comando.fecha_actualizacion
-            ,   fecha_creacion=comando.fecha_creacion
-            ,   id=comando.id
+        envio_dto = EnvioDTO(id=comando.id
             ,   facilitaciones=comando.facilitaciones
             ,   courier=comando.courier
             ,   destino=comando.destino)
 
-        envio: Envio = self.fabrica_envios.crear_objeto(envio_dto, MapeadorEnvio())
-        envio.crear_reserva(envio)
+        #envio: Envio = self.fabrica_envios.crear_objeto(envio_dto, MapeadorEnvio())
+        # envio.crear_reserva(envio)
 
-        repositorio = self.fabrica_repositorio.crear_objeto(RepositorioReservas.__class__)
+        # repositorio = self.fabrica_repositorio.crear_objeto(RepositorioReservas.__class__)
 
-        UnidadTrabajoPuerto.registrar_batch(repositorio.agregar, envio)
-        UnidadTrabajoPuerto.savepoint()
-        UnidadTrabajoPuerto.commit()
+        # UnidadTrabajoPuerto.registrar_batch(repositorio.agregar, envio)
+        # UnidadTrabajoPuerto.savepoint()
+        # UnidadTrabajoPuerto.commit()
 
 
 @comando.register(ConfirmarCourier)

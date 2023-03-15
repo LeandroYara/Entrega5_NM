@@ -10,3 +10,8 @@ from entregaAlpes.seedwork.dominio.repositorios import Repositorio
 
 class RepositorioEnvio(Repositorio, ABC):
     ...
+
+
+# TODO: mover a logistica_envios
+class RepositorioLogisticaEnvio(Repositorio, ABC):
+    ...

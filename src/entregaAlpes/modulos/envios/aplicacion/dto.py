@@ -4,6 +4,7 @@ from entregaAlpes.seedwork.aplicacion.dto import DTO
 @dataclass(frozen=True)
 class CourierDTO(DTO):
     nombre: str
+    is_externo: bool
 
 @dataclass(frozen=True)
 class ProductoDTO(DTO):

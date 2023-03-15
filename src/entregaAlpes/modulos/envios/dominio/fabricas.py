@@ -5,7 +5,7 @@ objetos complejos del dominio de vuelos
 
 """
 
-from .entidades import Envio
+from .entidades import Envio, LogisticaEnvio
 from .reglas import MinimoUnProductoFacilitado, CantidadMinimaPorProductoFacilitado
 from .excepciones import TipoObjetoNoExisteEnDominioVuelosExcepcion
 from entregaAlpes.seedwork.dominio.repositorios import Mapeador, Repositorio
@@ -27,10 +27,23 @@ class _FabricaEnvio(Fabrica):
             return envio
 
 @dataclass
+class _FabricaLogisticaEnvio(Fabrica):
+    def crear_objeto(self, obj: any, mapeador: Mapeador) -> any:
+        if isinstance(obj, Entidad):
+            return mapeador.entidad_a_dto(obj)
+        else:
+            envio: Envio = mapeador.dto_a_entidad(obj)
+            # TODO: regla validar courier
+            return envio
+
+@dataclass
 class FabricaEnvios(Fabrica):
     def crear_objeto(self, obj: any, mapeador: Mapeador) -> any:
         if mapeador.obtener_tipo() == Envio.__class__:
             fabrica_envio = _FabricaEnvio()
+            return fabrica_envio.crear_objeto(obj, mapeador)
+        elif mapeador.obtener_tipo() == LogisticaEnvio.__class__:
+            fabrica_envio = _FabricaLogisticaEnvio()
             return fabrica_envio.crear_objeto(obj, mapeador)
         else:
             raise TipoObjetoNoExisteEnDominioVuelosExcepcion()

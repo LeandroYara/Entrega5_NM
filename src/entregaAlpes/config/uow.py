@@ -27,7 +27,9 @@ class UnidadTrabajoSQLAlchemy(UnidadTrabajo):
         for batch in self.batches:
             lock = batch.lock
             batch.operacion(*batch.args, **batch.kwargs)
-        # db.drop_all()
+        
+        #db.drop_all()
+        #db.session.rollback()
         db.session.commit()
 
         super().commit()

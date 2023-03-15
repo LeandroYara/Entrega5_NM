@@ -29,7 +29,10 @@ class EnvioCancelado(EventoDominio):
 @dataclass
 class EnvioCourierDefinido(EventoDominio):
     id_pedido: uuid.UUID = None
-    fecha_actualizacion: datetime = None
+    facilitaciones: list[FacilitacionDTO] = None
+    destino: DestinoDTO = None
+    id_pedido: str = None
+    courier: CourierDTO = None
 
 @dataclass
 class EnvioCourierConfirmada(EventoDominio):

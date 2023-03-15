@@ -48,3 +48,15 @@ class Envio(db.Model):
     destino_nombre = db.Column(db.String(250), nullable=False)
     destino_direccion = db.Column(db.String(250), nullable=False)
     facilitaciones = db.relationship('Facilitacion', secondary=envios_facilitaciones, backref='envios')
+
+
+# TODO: mover a microservicio logistica_envio
+# No debe tener ForeignKey a Envio
+class LogisticaEnvio(db.Model):
+    __tablename__ = "logistica_envios"
+    id = db.Column(db.String(40), primary_key=True)
+    id_pedido = db.Column(db.String(40), primary_key=True)
+    courier_nombre = db.Column(db.String(250), nullable=True)
+    is_externo = db.Column(db.Boolean)
+    fecha_creacion = db.Column(db.DateTime, nullable=False)
+    fecha_actualizacion = db.Column(db.DateTime, nullable=False)

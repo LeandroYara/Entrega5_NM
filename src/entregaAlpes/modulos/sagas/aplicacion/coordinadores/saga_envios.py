@@ -8,19 +8,26 @@ from entregaAlpes.seedwork.dominio.eventos import EventoDominio
 from entregaAlpes.modulos.envios.aplicacion.comandos.crear_envio import CrearEnvio
 from entregaAlpes.modulos.envios.aplicacion.comandos.definir_courier import DefinirCourier
 from entregaAlpes.modulos.envios.aplicacion.comandos.confirmar_courier import ConfirmarCourier
-from entregaAlpes.modulos.envios.dominio.eventos import EnvioCreado, EnvioCourierConfirmada, EnvioCourierDefinido
-# from entregaAlpes.modulos.sagas.dominio.eventos.pagos import EnvioPagada, PagoRevertido
-# from entregaAlpes.modulos.sagas.dominio.eventos.gds import EnvioGDSConfirmada, ConfirmacionGDSRevertida, ConfirmacionFallida
+from entregaAlpes.modulos.envios.aplicacion.comandos.reprogramar_envio import ReprogramarEnvio
+from entregaAlpes.modulos.envios.aplicacion.comandos.revertir_asignacion_courier import RevertirAsignacionCourier
+from entregaAlpes.modulos.envios.dominio.eventos import (
+    EnvioCreado, EnvioCourierConfirmada, EnvioCourierDefinido,
+    CreacionEnvioFallido, AsignacionDeCourierFallida, ConfirmacionDeCourierFallida
+)
+from entregaAlpes.modulos.envios.infraestructura.fabricas import FabricaRepositorio
+from entregaAlpes.modulos.envios.infraestructura.repositorios import RepositorioEventosEnvios
 
 
 class CoordinadorEnvios(CoordinadorOrquestacion):
 
+    fabrica_repositorio = FabricaRepositorio()
+
     def inicializar_pasos(self):
         self.pasos = [
             Inicio(index=0),
-            Transaccion(index=1, comando=CrearEnvio, evento=EnvioCreado, error=Exception, compensacion=None),
-            Transaccion(index=2, comando=DefinirCourier, evento=EnvioCourierDefinido, error=Exception, compensacion=None),
-            Transaccion(index=3, comando=ConfirmarCourier, evento=EnvioCourierConfirmada, error=Exception, compensacion=None),
+            Transaccion(index=1, comando=CrearEnvio, evento=EnvioCreado, error=CreacionEnvioFallido, compensacion=None),
+            Transaccion(index=2, comando=DefinirCourier, evento=EnvioCourierDefinido, error=AsignacionDeCourierFallida, compensacion=RevertirAsignacionCourier),
+            Transaccion(index=3, comando=ConfirmarCourier, evento=EnvioCourierConfirmada, error=ConfirmacionDeCourierFallida, compensacion=ReprogramarEnvio),
             Fin(index=4)
         ]
 
@@ -33,13 +40,12 @@ class CoordinadorEnvios(CoordinadorOrquestacion):
     def persistir_en_saga_log(self, mensaje):
         # TODO Persistir estado en DB
         # Probablemente usted podría usar un repositorio para ello
-        ...
+        repositorio = self.fabrica_repositorio.crear_objeto(RepositorioEventosEnvios)
+        repositorio.agregar(mensaje)
 
     def construir_comando(self, evento: EventoDominio, tipo_comando: type):
-        # TODO Transforma un evento en la entrada de un comando
-        # Por ejemplo si el evento que llega es EnvioCreada y el tipo_comando es PagarEnvio
-        # Debemos usar los atributos de EnvioCreada para crear el comando PagarEnvio
         print(f"########### PROCESANDO {evento} #############")
+        self.persistir_en_saga_log(evento)
         if isinstance(evento, EnvioCreado) and tipo_comando is DefinirCourier:
             comando = DefinirCourier(
                 fecha_creacion=evento.fecha_creacion,

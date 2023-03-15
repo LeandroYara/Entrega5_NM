@@ -50,6 +50,18 @@ class Envio(db.Model):
     facilitaciones = db.relationship('Facilitacion', secondary=envios_facilitaciones, backref='envios')
 
 
+class EventosEnvio(db.Model):
+    __tablename__ = "eventos_envios"
+    id = db.Column(db.String(40), primary_key=True)
+    id_entidad = db.Column(db.String(40), nullable=False)
+    fecha_evento = db.Column(db.DateTime, nullable=False)
+    version = db.Column(db.String(10), nullable=False)
+    tipo_evento = db.Column(db.String(100), nullable=False)
+    formato_contenido = db.Column(db.String(10), nullable=False)
+    nombre_servicio = db.Column(db.String(40), nullable=False)
+    contenido = db.Column(db.Text, nullable=False)
+
+
 # TODO: mover a microservicio logistica_envio
 # No debe tener ForeignKey a Envio
 class LogisticaEnvio(db.Model):

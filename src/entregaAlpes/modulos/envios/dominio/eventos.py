@@ -7,9 +7,14 @@ from entregaAlpes.modulos.envios.aplicacion.dto import EnvioDTO, FacilitacionDTO
 
 
 @dataclass
-class EnvioCreado(EventoDominio):
-    fecha_actualizacion: datetime = None
-    fecha_creacion: datetime = None
+class EventoEnvio(EventoDominio):
+    estado: str = None
+
+
+@dataclass
+class EnvioCreado(EventoEnvio):
+    fecha_actualizacion: datetime = field(default=datetime.now())
+    fecha_creacion: datetime = field(default=datetime.now())
     id: str
     facilitaciones: list[FacilitacionDTO] = None
     destino: DestinoDTO = None
@@ -17,17 +22,17 @@ class EnvioCreado(EventoDominio):
 
 
 @dataclass
-class EnvioReProgramado(EventoDominio):
+class EnvioReProgramado(EventoEnvio):
     id_pedido: uuid.UUID = None
     fecha_actualizacion: datetime = None
 
 @dataclass
-class EnvioCancelado(EventoDominio):
+class EnvioCancelado(EventoEnvio):
     id_pedido: uuid.UUID = None
     fecha_actualizacion: datetime = None
 
 @dataclass
-class EnvioCourierDefinido(EventoDominio):
+class EnvioCourierDefinido(EventoEnvio):
     id_pedido: uuid.UUID = None
     facilitaciones: list[FacilitacionDTO] = None
     destino: DestinoDTO = None
@@ -35,6 +40,25 @@ class EnvioCourierDefinido(EventoDominio):
     courier: CourierDTO = None
 
 @dataclass
-class EnvioCourierConfirmada(EventoDominio):
+class EnvioCourierConfirmada(EventoEnvio):
+    id_pedido: uuid.UUID = None
+    fecha_actualizacion: datetime = None
+
+
+# errors
+@dataclass
+class CreacionEnvioFallido(EventoEnvio):
+    id_pedido: uuid.UUID = None
+    fecha_actualizacion: datetime = None
+
+# errors
+@dataclass
+class AsignacionDeCourierFallida(EventoEnvio):
+    id_pedido: uuid.UUID = None
+    fecha_actualizacion: datetime = None
+
+# errors
+@dataclass
+class ConfirmacionDeCourierFallida(EventoEnvio):
     id_pedido: uuid.UUID = None
     fecha_actualizacion: datetime = None

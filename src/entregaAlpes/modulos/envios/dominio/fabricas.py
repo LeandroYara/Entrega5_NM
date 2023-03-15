@@ -11,12 +11,13 @@ from .excepciones import TipoObjetoNoExisteEnDominioVuelosExcepcion
 from entregaAlpes.seedwork.dominio.repositorios import Mapeador, Repositorio
 from entregaAlpes.seedwork.dominio.fabricas import Fabrica
 from entregaAlpes.seedwork.dominio.entidades import Entidad
+from entregaAlpes.seedwork.dominio.eventos import EventoDominio
 from dataclasses import dataclass
 
 @dataclass
 class _FabricaEnvio(Fabrica):
     def crear_objeto(self, obj: any, mapeador: Mapeador) -> any:
-        if isinstance(obj, Entidad):
+        if isinstance(obj, Entidad) or isinstance(obj, EventoDominio):
             return mapeador.entidad_a_dto(obj)
         else:
             envio: Envio = mapeador.dto_a_entidad(obj)

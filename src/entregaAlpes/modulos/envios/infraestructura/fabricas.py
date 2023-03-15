@@ -8,8 +8,8 @@ objetos complejos en la capa de infraestructura del dominio de vuelos
 from dataclasses import dataclass, field
 from entregaAlpes.seedwork.dominio.fabricas import Fabrica
 from entregaAlpes.seedwork.dominio.repositorios import Repositorio
-from entregaAlpes.modulos.envios.dominio.repositorios import RepositorioEnvio, RepositorioLogisticaEnvio
-from .repositorios import RepositorioEnvioSQLite, RepositorioLogisticaEnvioSQLite
+from entregaAlpes.modulos.envios.dominio.repositorios import RepositorioEnvio, RepositorioLogisticaEnvio, RepositorioEventosEnvios
+from .repositorios import RepositorioEnvioSQLite, RepositorioLogisticaEnvioSQLite, RepositorioEventosEnviosSQLAlchemy
 from entregaAlpes.seedwork.dominio.excepciones import ExcepcionFabrica
 
 @dataclass
@@ -19,5 +19,7 @@ class FabricaRepositorio(Fabrica):
             return RepositorioEnvioSQLite()
         elif obj == RepositorioLogisticaEnvio:
             return RepositorioLogisticaEnvioSQLite()
+        elif obj == RepositorioEventosEnvios:
+            return RepositorioEventosEnviosSQLAlchemy()
         else:
             raise ExcepcionFabrica(f"No se puede crear la fabrica para {obj}")

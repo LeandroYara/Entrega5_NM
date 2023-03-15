@@ -23,7 +23,8 @@ class LogisticaEnvio(AgregacionRaiz):
     def definir_courier(self):
         self.estado = ov.EstadoEnvio.ENVIO_EDA
 
-        self.agregar_evento(EnvioCourierDefinido(self.id_pedido, self.fecha_actualizacion))
+        self.agregar_evento(EnvioCourierDefinido(id_pedido=self.id_pedido, courier=self.courier))
+
 
 @dataclass
 class Envio(AgregacionRaiz):

@@ -152,8 +152,6 @@ class MapadeadorEventosEnvio(Mapeador):
 
     def _entidad_a_envio_courier_definido(self, entidad: EnvioCourierDefinido, version=LATEST_VERSION):
         def v1(evento):
-            print("########### _entidad_a_envio_courier_definido ##############")
-            print(evento)
             from .schema.v1.eventos import EnvioCourierDefinidoPayload, EventoEnvioCourierDefinido
 
             payload = EnvioCourierDefinidoPayload(
@@ -180,16 +178,85 @@ class MapadeadorEventosEnvio(Mapeador):
             return v1(entidad)
     
     def _entidad_a_envio_courier_confirmada(self, entidad: EnvioCourierConfirmada, version=LATEST_VERSION):
-        # TODO
-        raise NotImplementedError
+        def v1(evento):
+            from .schema.v1.eventos import EnvioCourierConfirmadaPayload, EventoEnvioCourierConfirmada
+
+            payload = EnvioCourierConfirmadaPayload(
+                id_pedido=str(evento.id_pedido),
+                courier_name=str(evento.courier.nombre),
+                courier_es_externo=bool(evento.courier.is_externo),
+                fecha_creacion=int(unix_time_millis(evento.fecha_evento))
+            )
+            evento_integracion = EventoEnvioCourierConfirmada(id=str(evento.id))
+            evento_integracion.id = str(evento.id)
+            evento_integracion.time = int(unix_time_millis(evento.fecha_evento))
+            evento_integracion.specversion = str(version)
+            evento_integracion.type = 'EnvioCourierConfirmada'
+            evento_integracion.datacontenttype = 'AVRO'
+            evento_integracion.service_name = 'entregaAlpes'
+            evento_integracion.data = payload
+
+            return evento_integracion
+                    
+        if not self.es_version_valida(version):
+            raise Exception(f'No se sabe procesar la version {version}')
+
+        if version == 'v1':
+            return v1(entidad)
     
     def _entidad_a_confirmacion_courier_fallida(self, entidad: ConfirmacionDeCourierFallida, version=LATEST_VERSION):
-        # TODO
-        raise NotImplementedError
+        def v1(evento):
+            from .schema.v1.eventos import ConfirmacionDeCourierFallidaPayload, EventoConfirmacionDeCourierFallida
+
+            payload = ConfirmacionDeCourierFallidaPayload(
+                id_pedido=str(evento.id_pedido),
+                courier_name=str(evento.courier.nombre),
+                courier_es_externo=bool(evento.courier.is_externo),
+                fecha_creacion=int(unix_time_millis(evento.fecha_evento))
+            )
+            evento_integracion = EventoConfirmacionDeCourierFallida(id=str(evento.id))
+            evento_integracion.id = str(evento.id)
+            evento_integracion.time = int(unix_time_millis(evento.fecha_evento))
+            evento_integracion.specversion = str(version)
+            evento_integracion.type = 'ConfirmacionDeCourierFallida'
+            evento_integracion.datacontenttype = 'AVRO'
+            evento_integracion.service_name = 'entregaAlpes'
+            evento_integracion.data = payload
+
+            return evento_integracion
+                    
+        if not self.es_version_valida(version):
+            raise Exception(f'No se sabe procesar la version {version}')
+
+        if version == 'v1':
+            return v1(entidad)
     
     def _entidad_a_asignacion_courier_fallida(self, entidad: AsignacionDeCourierFallida, version=LATEST_VERSION):
-        # TODO
-        raise NotImplementedError
+        def v1(evento):
+            from .schema.v1.eventos import EventoAsignacionDeCourierFallida, AsignacionDeCourierFallidaPayload
+
+            payload = AsignacionDeCourierFallidaPayload(
+                id_pedido=str(evento.id_pedido),
+                courier_name=str(evento.courier.nombre),
+                courier_es_externo=bool(evento.courier.is_externo),
+                fecha_creacion=int(unix_time_millis(evento.fecha_evento))
+            )
+            evento_integracion = EventoAsignacionDeCourierFallida(id=str(evento.id))
+            evento_integracion.id = str(evento.id)
+            evento_integracion.time = int(unix_time_millis(evento.fecha_evento))
+            evento_integracion.specversion = str(version)
+            evento_integracion.type = 'AsignacionDeCourierFallida'
+            evento_integracion.datacontenttype = 'AVRO'
+            evento_integracion.service_name = 'entregaAlpes'
+            evento_integracion.data = payload
+
+            return evento_integracion
+                    
+        if not self.es_version_valida(version):
+            raise Exception(f'No se sabe procesar la version {version}')
+
+        if version == 'v1':
+            return v1(entidad)
     
     def _entidad_a_creacion_envio_fallido(self, entidad: CreacionEnvioFallido, version=LATEST_VERSION):
         # TODO
@@ -206,4 +273,5 @@ class MapadeadorEventosEnvio(Mapeador):
         return func(entidad, version=version)
 
     def dto_a_entidad(self, dto: EnvioDTO, version=LATEST_VERSION) -> Envio:
+        print(dto)
         raise NotImplementedError

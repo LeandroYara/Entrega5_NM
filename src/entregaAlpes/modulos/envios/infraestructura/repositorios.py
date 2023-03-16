@@ -77,12 +77,17 @@ class RepositorioLogisticaEnvioSQLite(RepositorioLogisticaEnvio):
         # TODO
         raise NotImplementedError
 
-    def eliminar(self, logistica_envio_id: UUID):
-        # TODO
+    def eliminar(self, id_pedido: UUID):
+        # logistica_envio = self.obtener_por_id_pedido(id_pedido=id_pedido)
+        # db.session.delete(logistica_envio)
         raise NotImplementedError
     
     def obtener_por_id(self, id: UUID) -> LogisticaEnvio:
         # TODO
+        raise NotImplementedError
+    
+    def obtener_por_id_pedido(self, id_pedido: UUID) -> LogisticaEnvio:
+        # return db.session.query(LogisticaEnvioDTO).filter_by(id_pedido=str(id)).one()
         raise NotImplementedError
     
     def obtener_todos(self) -> list[LogisticaEnvio]:

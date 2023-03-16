@@ -89,6 +89,7 @@ def flask_uow():
     from flask import session
     from entregaAlpes.config.uow import UnidadTrabajoSQLAlchemy
     if session.get('uow'):
+        # del session['uow']
         return session['uow']
     else:
         uow_serialized = pickle.dumps(UnidadTrabajoSQLAlchemy())

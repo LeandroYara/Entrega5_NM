@@ -43,6 +43,7 @@ class EnvioCourierDefinido(EventoEnvio):
 class EnvioCourierConfirmada(EventoEnvio):
     id_pedido: uuid.UUID = None
     fecha_actualizacion: datetime = None
+    courier: CourierDTO = None
 
 
 # errors
@@ -56,9 +57,11 @@ class CreacionEnvioFallido(EventoEnvio):
 class AsignacionDeCourierFallida(EventoEnvio):
     id_pedido: uuid.UUID = None
     fecha_actualizacion: datetime = None
+    courier: CourierDTO = None
 
 # errors
 @dataclass
 class ConfirmacionDeCourierFallida(EventoEnvio):
     id_pedido: uuid.UUID = None
     fecha_actualizacion: datetime = None
+    courier: CourierDTO = None

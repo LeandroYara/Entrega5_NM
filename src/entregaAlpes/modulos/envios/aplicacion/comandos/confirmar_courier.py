@@ -8,6 +8,9 @@ from entregaAlpes.modulos.envios.dominio.entidades import Envio
 from entregaAlpes.seedwork.infraestructura.uow import UnidadTrabajoPuerto
 from entregaAlpes.modulos.envios.aplicacion.mapeadores import MapeadorEnvio
 from entregaAlpes.modulos.envios.infraestructura.repositorios import RepositorioEnvio
+from pydispatch import dispatcher
+from entregaAlpes.modulos.envios.dominio.eventos import ConfirmacionDeCourierFallida, EnvioCourierConfirmada
+
 
 @dataclass
 class ConfirmarCourier(Comando):
@@ -22,6 +25,7 @@ class ConfirmarCourierHandler(EnvioBaseHandler):
     
     def handle(self, comando: ConfirmarCourier):
         envio_dto = EnvioDTO(id=comando.id
+            ,   id_pedido=comando.id_pedido
             ,   facilitaciones=comando.facilitaciones
             ,   courier=comando.courier
             ,   destino=comando.destino)
@@ -34,6 +38,19 @@ class ConfirmarCourierHandler(EnvioBaseHandler):
         # UnidadTrabajoPuerto.registrar_batch(repositorio.agregar, envio)
         # UnidadTrabajoPuerto.savepoint()
         # UnidadTrabajoPuerto.commit()
+        # Para triggear el final
+        # evento = EnvioCourierConfirmada(
+        #     courier=envio_dto.courier,
+        #     id_pedido=envio_dto.id_pedido,
+        # )
+        # dispatcher.send(signal=f'{type(evento).__name__}Dominio', evento=evento)
+
+        # Para triggear compensaciones
+        evento = ConfirmacionDeCourierFallida(
+            courier=envio_dto.courier,
+            id_pedido=envio_dto.id_pedido,
+        )
+        dispatcher.send(signal=f'{type(evento).__name__}Dominio', evento=evento)
 
 
 @comando.register(ConfirmarCourier)

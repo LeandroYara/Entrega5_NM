@@ -24,7 +24,7 @@ class _FabricaSolicitud(Fabrica):
             return solicitud
 
 @dataclass
-class FabricaEnvios(Fabrica):
+class FabricaSolicitud(Fabrica):
     def crear_objeto(self, obj: any, mapeador: Mapeador) -> any:
         if mapeador.obtener_tipo() == Solicitud.__class__:
             fabrica_solicitud = _FabricaSolicitud()

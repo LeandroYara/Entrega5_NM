@@ -6,7 +6,7 @@ persistir objetos dominio (agregaciones) en la capa de infraestructura del domin
 """
 
 from entregaAlpes.config.db import db
-from entregaAlpes.modulos.solicitudes.dominio.fabricas import FabricaEnvios
+from entregaAlpes.modulos.solicitudes.dominio.fabricas import FabricaSolicitud
 from entregaAlpes.modulos.solicitudes.dominio.repositorios import RepositorioSolicitudes, RepositorioEventosSolicitudes
 from entregaAlpes.modulos.solicitudes.dominio.objetos_valor import Leg, Segmento
 from entregaAlpes.modulos.solicitudes.dominio.entidades import Solicitud
@@ -20,22 +20,22 @@ from pulsar.schema import *
 class RepositorioSolicitudesSQLAlchemy(RepositorioSolicitudes):
 
     def __init__(self):
-        self._fabrica_envios: FabricaEnvios = FabricaEnvios()
+        self._fabrica_solicitudes: FabricaSolicitud = FabricaSolicitud()
 
     @property
-    def fabrica_envios(self):
-        return self._fabrica_envios
+    def fabrica_solicitudes(self):
+        return self._fabrica_solicitudes
 
     def obtener_por_id(self, id: UUID) -> Solicitud:
         reserva_dto = db.session.query(SolicitudDTO).filter_by(id=str(id)).one()
-        return self.fabrica_envios.crear_objeto(reserva_dto, MapeadorSolicitud())
+        return self.fabrica_solicitudes.crear_objeto(reserva_dto, MapeadorSolicitud())
 
     def obtener_todos(self) -> list[Solicitud]:
         # TODO
         raise NotImplementedError
 
     def agregar(self, solicitud: Solicitud):
-        reserva_dto = self._fabrica_envios.crear_objeto(solicitud, MapeadorSolicitud())
+        reserva_dto = self._fabrica_solicitudes.crear_objeto(solicitud, MapeadorSolicitud())
 
         db.session.add(reserva_dto)
 
@@ -50,21 +50,21 @@ class RepositorioSolicitudesSQLAlchemy(RepositorioSolicitudes):
 class RepositorioEventosSolicitudSQLAlchemy(RepositorioEventosSolicitudes):
 
     def __init__(self):
-        self._fabrica_vuelos: FabricaEnvios = FabricaEnvios()
+        self._fabrica_solicitudes: FabricaSolicitud = FabricaSolicitud()
 
     @property
-    def fabrica_envios(self):
-        return self._fabrica_vuelos
+    def fabrica_solicitudes(self):
+        return self._fabrica_solicitudes
 
     def obtener_por_id(self, id: UUID) -> Solicitud:
         solicitud_dto = db.session.query(SolicitudDTO).filter_by(id=str(id)).one()
-        return self.fabrica_envios.crear_objeto(solicitud_dto, MapadeadorEventosSolicitud())
+        return self.fabrica_solicitudes.crear_objeto(solicitud_dto, MapadeadorEventosSolicitud())
 
     def obtener_todos(self) -> list[Solicitud]:
         raise NotImplementedError
 
     def agregar(self, evento):
-        solicitud_evento = self.fabrica_envios.crear_objeto(evento, MapadeadorEventosSolicitud())
+        solicitud_evento = self.fabrica_solicitudes.crear_objeto(evento, MapadeadorEventosSolicitud())
 
         parser_payload = JsonSchema(solicitud_evento.data.__class__)
         json_str = parser_payload.encode(solicitud_evento.data)
@@ -84,5 +84,5 @@ class RepositorioEventosSolicitudSQLAlchemy(RepositorioEventosSolicitudes):
     def actualizar(self, solicitud: Solicitud):
         raise NotImplementedError
 
-    def eliminar(self, reserva_id: UUID):
+    def eliminar(self, solicitud_id: UUID):
         raise NotImplementedError

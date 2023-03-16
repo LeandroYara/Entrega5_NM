@@ -2,8 +2,8 @@ import strawberry
 import typing
 
 from strawberry.types import Info
-from bff_web import utils
-from bff_web.despachadores import Despachador
+from bff_soli import utils
+from bff_soli.despachadores import Despachador
 
 from .esquemas import *
 
@@ -11,7 +11,7 @@ from .esquemas import *
 class Mutation:
 
     @strawberry.mutation
-    async def crear_reserva(self, id_usuario: str, id_correlacion: str, info: Info) -> SolicitudRespuesta:
+    async def crear_solicitud(self, id_usuario: str, id_correlacion: str, info: Info) -> SolicitudRespuesta:
         print(f"ID Usuario: {id_usuario}, ID Correlación: {id_correlacion}")
         payload = dict(
             id_usuario = id_usuario,

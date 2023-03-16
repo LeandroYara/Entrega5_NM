@@ -24,7 +24,7 @@ class CancelarEnvioCourierHandler(EnvioBaseHandler):
 
         #UnidadTrabajoPuerto.registrar_batch(repositorio.eliminar, comando.id_pedido)
         #UnidadTrabajoPuerto.savepoint()
-        UnidadTrabajoPuerto.rollback()
+        #UnidadTrabajoPuerto.rollback()
 
         evento = AsignacionDeCourierFallida(
             courier=comando.courier,

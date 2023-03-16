@@ -15,8 +15,9 @@ class RevertirAsignacionCourier(Comando):
 
 class RevertirAsignacionCourierHandler(EnvioBaseHandler):
     def handle(self, comando: RevertirAsignacionCourier):
+        print("################ REVIRTIENDO ASIGNACION DE COURIER ###############")
         print(comando)
-        UnidadTrabajoPuerto.rollback()
+        #UnidadTrabajoPuerto.rollback()
         # TODO: Enviar evento para reprogramar el envio
 
 

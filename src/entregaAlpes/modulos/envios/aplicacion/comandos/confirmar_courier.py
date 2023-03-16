@@ -39,18 +39,18 @@ class ConfirmarCourierHandler(EnvioBaseHandler):
         # UnidadTrabajoPuerto.savepoint()
         # UnidadTrabajoPuerto.commit()
         # Para triggear el final
-        evento = EnvioCourierConfirmada(
-            courier=envio_dto.courier,
-            id_pedido=envio_dto.id_pedido,
-        )
-        dispatcher.send(signal=f'{type(evento).__name__}Dominio', evento=evento)
-
-        # Para triggear compensaciones
-        # evento = ConfirmacionDeCourierFallida(
+        # evento = EnvioCourierConfirmada(
         #     courier=envio_dto.courier,
         #     id_pedido=envio_dto.id_pedido,
         # )
         # dispatcher.send(signal=f'{type(evento).__name__}Dominio', evento=evento)
+
+        # Para triggear compensaciones
+        evento = ConfirmacionDeCourierFallida(
+            courier=envio_dto.courier,
+            id_pedido=envio_dto.id_pedido,
+        )
+        dispatcher.send(signal=f'{type(evento).__name__}Dominio', evento=evento)
 
 
 @comando.register(ConfirmarCourier)

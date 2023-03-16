@@ -1,0 +1,39 @@
+{
+	"info": {
+		"_postman_id": "c5b005d0-1ad0-4639-a442-c79eec8b350e",
+		"name": "BFF Entrega 5",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26279310"
+	},
+	"item": [
+		{
+			"name": "Get solicitudes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/envios/solicitud",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"envios",
+						"solicitud"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "id_solicitud",
+			"value": "1"
+		}
+	]
+}

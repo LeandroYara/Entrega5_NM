@@ -1,18 +1,16 @@
+from entregaAlpes.modulos.envios.infraestructura.fabricas import FabricaRepositorio
 from entregaAlpes.seedwork.aplicacion.sagas import CoordinadorOrquestacion, Transaccion, Inicio, Fin
-from entregaAlpes.seedwork.aplicacion.comandos import Comando
 from entregaAlpes.seedwork.dominio.eventos import EventoDominio
 
-# from entregaAlpes.modulos.sagas.aplicacion.comandos.cliente import RegistrarUsuario, ValidarUsuario
-# from entregaAlpes.modulos.sagas.aplicacion.comandos.pagos import PagarEnvio, RevertirPago
-# from entregaAlpes.modulos.sagas.aplicacion.comandos.gds import ConfirmarEnvio, RevertirConfirmacion
 from entregaAlpes.modulos.solicitudes.aplicacion.comandos.pagar_solicitud import PagarSolicitud
 from entregaAlpes.modulos.solicitudes.aplicacion.comandos.crear_solicitud import CrearSolicitud
 from entregaAlpes.modulos.solicitudes.dominio.eventos import SolicitudCreada, SolicitudPagada
-# from entregaAlpes.modulos.sagas.dominio.eventos.pagos import EnvioPagada, PagoRevertido
-# from entregaAlpes.modulos.sagas.dominio.eventos.gds import EnvioGDSConfirmada, ConfirmacionGDSRevertida, ConfirmacionFallida
+from entregaAlpes.modulos.solicitudes.infraestructura.repositorios import RepositorioEventosSolicitudes
 
 
 class CoordinadorSolicitudes(CoordinadorOrquestacion):
+
+    fabrica_repositorio = FabricaRepositorio()
 
     def inicializar_pasos(self):
         self.pasos = [
@@ -29,9 +27,8 @@ class CoordinadorSolicitudes(CoordinadorOrquestacion):
         self.persistir_en_saga_log(self.pasos[-1])
 
     def persistir_en_saga_log(self, mensaje):
-        # TODO Persistir estado en DB
-        # Probablemente usted podría usar un repositorio para ello
-        ...
+        repositorio = self.fabrica_repositorio.crear_objeto(RepositorioEventosSolicitudes)
+        repositorio.agregar(mensaje)
 
     def construir_comando(self, evento: EventoDominio, tipo_comando: type):
         # TODO Transforma un evento en la entrada de un comando
